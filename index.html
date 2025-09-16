@@ -30,7 +30,13 @@
             border-bottom: 1px solid #ddd;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-left {
+            display: flex;
+            align-items: center;
         }
 
         .sidebar h1 {
@@ -39,6 +45,11 @@
             font-weight: 300;
             letter-spacing: 2px;
             color: #333;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
         }
 
         .nav-item {
@@ -58,6 +69,126 @@
             background: #f0f0f0;
             color: #333;
             border-radius: 5px;
+        }
+
+        .instagram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .instagram-btn:hover {
+            background: #555;
+        }
+
+        .instagram-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .nav-items.mobile-hidden {
+            display: flex;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                padding: 0 20px;
+            }
+
+            .sidebar h1 {
+                margin-right: 20px;
+                font-size: 20px;
+            }
+
+            .nav-items {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #ddd;
+            }
+
+            .nav-items.show {
+                display: flex;
+            }
+
+            .nav-item {
+                width: 100%;
+                text-align: left;
+                margin: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-right: 15px;
+            }
+
+            .bio-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .bio-photo {
+                align-self: center;
+                margin-bottom: 30px;
+            }
+
+            .bio-photo img {
+                max-width: 250px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-collage {
+                columns: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 20px;
+            }
+
+            .bio-section {
+                padding: 40px 20px;
+            }
+
+            .bio-photo img {
+                max-width: 200px;
+            }
+
+            .photo-collage {
+                columns: 1;
+            }
         }
 
         .main-content {
@@ -432,7 +563,9 @@
         let currentImages = [];
         let currentImageIndex = 0;
 
-       const portfolioConfig = {
+        // REPLACE THIS CONFIGURATION WITH YOUR ACTUAL FILES
+        // Update this object with your real file paths and project information
+        const portfolioConfig = {
   "profileImage": "profile.jpeg",
   "work": {
     "1": {
