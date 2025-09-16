@@ -395,186 +395,45 @@
         let currentImageIndex = 0;
         let workData = {};
 
-        // Load work data from file system using fetch API
-        async function loadWorkData() {
-            const workData = {};
-            let workIndex = 1;
-            
-            while (true) {
-                try {
-                    // Try to read the info.txt file for this work item
-                    const infoPath = `work/${workIndex}/info.txt`;
-                    const infoResponse = await fetch(infoPath);
-                    if (!infoResponse.ok) break;
-                    
-                    const infoContent = await infoResponse.text();
-                    const lines = infoContent.trim().split('\n');
-                    
-                    // Parse info.txt (title, year, type, role, additional info)
-                    const title = lines[0] || '';
-                    const year = lines[1] || '';
-                    const type = lines[2] || '';
-                    const role = lines[3] || '';
-                    const info = lines[4] || '';
-                    
-                    // Read thumbnail
-                    let thumbnail = '';
-                    const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-                    for (const ext of extensions) {
-                        try {
-                            const thumbPath = `work/${workIndex}/thumbnail.${ext}`;
-                            const thumbResponse = await fetch(thumbPath);
-                            if (thumbResponse.ok) {
-                                thumbnail = thumbPath;
-                                break;
-                            }
-                        } catch (e) {
-                            // Continue to next extension
-                        }
-                    }
-                    
-                    // Load stills
-                    const stills = [];
-                    let stillIndex = 1;
-                    while (true) {
-                        let found = false;
-                        
-                        for (const ext of extensions) {
-                            try {
-                                const stillPath = `work/${workIndex}/stills/${stillIndex}.${ext}`;
-                                const stillResponse = await fetch(stillPath);
-                                if (stillResponse.ok) {
-                                    stills.push(stillPath);
-                                    found = true;
-                                    break;
-                                }
-                            } catch (e) {
-                                // Continue to next extension
-                            }
-                        }
-                        
-                        if (!found) break;
-                        stillIndex++;
-                    }
-                    
-                    // Load BTS photos
-                    const bts = [];
-                    let btsIndex = 1;
-                    while (true) {
-                        let found = false;
-                        
-                        for (const ext of extensions) {
-                            try {
-                                const btsPath = `work/${workIndex}/bts/${btsIndex}.${ext}`;
-                                const btsResponse = await fetch(btsPath);
-                                if (btsResponse.ok) {
-                                    bts.push(btsPath);
-                                    found = true;
-                                    break;
-                                }
-                            } catch (e) {
-                                // Continue to next extension
-                            }
-                        }
-                        
-                        if (!found) break;
-                        btsIndex++;
-                    }
-                    
-                    workData[workIndex] = {
-                        title,
-                        year,
-                        type,
-                        role,
-                        info,
-                        thumbnail,
-                        stills,
-                        bts
-                    };
-                    
-                    workIndex++;
-                } catch (e) {
-                    // No more work items found
-                    break;
+        // Configuration object - UPDATE THIS WITH YOUR ACTUAL FILE STRUCTURE
+        const portfolioConfig = {
+            profileImage: 'profile.jpg', // Change to your profile image filename
+            work: {
+                1: {
+                    title: 'Sample Project 1',
+                    year: '2024',
+                    type: 'Short Film',
+                    role: 'Director',
+                    info: 'This is a sample project description.',
+                    thumbnail: 'work/1/thumbnail.png',
+                    stills: ['work/1/stills/1.png', 'work/1/stills/2.png'],
+                    bts: ['work/1/bts/1.jpeg', 'work/1/bts/2.jpeg']
+                },
+                2: {
+                    title: 'Sample Project 2',
+                    year: '2023',
+                    type: 'Music Video',
+                    role: 'Cinematographer',
+                    info: 'This is another sample project description.',
+                    thumbnail: 'work/2/thumbnail.jpg',
+                    stills: ['work/2/stills/1.jpg', 'work/2/stills/2.jpg'],
+                    bts: ['work/2/bts/1.JPG']
                 }
-            }
-            
-            return workData;
-        }
-
-        async function loadPhotographyImages() {
-            const images = [];
-            let photoIndex = 1;
-            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-            
-            while (true) {
-                let found = false;
-                
-                for (const ext of extensions) {
-                    try {
-                        const photoPath = `photography/${photoIndex}.${ext}`;
-                        const photoResponse = await fetch(photoPath);
-                        if (photoResponse.ok) {
-                            images.push(photoPath);
-                            found = true;
-                            break;
-                        }
-                    } catch (e) {
-                        // Continue to next extension
-                    }
-                }
-                
-                if (!found) break;
-                photoIndex++;
-            }
-            
-            return images;
-        }
-
-        async function loadCrewImages() {
-            const images = [];
-            let crewIndex = 1;
-            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-            
-            while (true) {
-                let found = false;
-                
-                for (const ext of extensions) {
-                    try {
-                        const crewPath = `crew/${crewIndex}.${ext}`;
-                        const crewResponse = await fetch(crewPath);
-                        if (crewResponse.ok) {
-                            images.push(crewPath);
-                            found = true;
-                            break;
-                        }
-                    } catch (e) {
-                        // Continue to next extension
-                    }
-                }
-                
-                if (!found) break;
-                crewIndex++;
-            }
-            
-            return images;
-        }
-
-        async function loadProfileImage() {
-            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-            for (const ext of extensions) {
-                try {
-                    const profilePath = `profile.${ext}`;
-                    const profileResponse = await fetch(profilePath);
-                    if (profileResponse.ok) {
-                        return profilePath;
-                    }
-                } catch (e) {
-                    // Continue to next extension
-                }
-            }
-            return null;
-        }
+                // Add more work projects here...
+            },
+            photography: [
+                'photography/1.jpg',
+                'photography/2.jpg',
+                'photography/3.jpg'
+                // Add more photography images here...
+            ],
+            crew: [
+                'crew/1.jpg',
+                'crew/2.jpg',
+                'crew/3.jpg'
+                // Add more crew work images here...
+            ]
+        };
 
         function showPage(pageId) {
             // Hide all pages
@@ -595,10 +454,12 @@
         }
 
         function showWorkDetail(workId) {
-            const work = workData[workId];
+            const work = portfolioConfig.work[workId];
             if (!work) return;
 
             const content = document.getElementById('workDetailContent');
+            const allImages = [...work.stills, ...work.bts];
+            
             content.innerHTML = `
                 <h1>${work.title} (${work.year})</h1>
                 <h2>${work.type}</h2>
@@ -608,8 +469,8 @@
                 <div class="section-title">Stills</div>
                 <div class="work-grid">
                     ${work.stills.map((img, index) => `
-                        <div class="photo-item" onclick="openModal([...workData[${workId}].stills, ...workData[${workId}].bts], ${index})">
-                            <img src="${img}" alt="Still ${index + 1}">
+                        <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${index})">
+                            <img src="${img}" alt="Still ${index + 1}" onerror="this.style.display='none'">
                         </div>
                     `).join('')}
                 </div>
@@ -617,8 +478,8 @@
                 <div class="section-title">Behind the Scenes</div>
                 <div class="photo-collage">
                     ${work.bts.map((img, index) => `
-                        <div class="photo-item" onclick="openModal([...workData[${workId}].stills, ...workData[${workId}].bts], ${work.stills.length + index})">
-                            <img src="${img}" alt="BTS ${index + 1}">
+                        <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${work.stills.length + index})">
+                            <img src="${img}" alt="BTS ${index + 1}" onerror="this.style.display='none'">
                         </div>
                     `).join('')}
                 </div>
@@ -665,56 +526,47 @@
         });
 
         // Initialize the website
-        async function init() {
-            try {
-                // Load profile image
-                const profileImagePath = await loadProfileImage();
-                if (profileImagePath) {
-                    document.getElementById('profileImage').src = profileImagePath;
-                } else {
-                    console.warn('Could not load profile image');
-                }
+        function init() {
+            // Load profile image
+            document.getElementById('profileImage').src = portfolioConfig.profileImage;
+            document.getElementById('profileImage').onerror = function() {
+                this.style.display = 'none';
+                console.warn('Could not load profile image:', portfolioConfig.profileImage);
+            };
 
-                workData = await loadWorkData();
-                
-                // Populate home page work grid (reverse order)
-                const workGrid = document.getElementById('workGrid');
-                const workIds = Object.keys(workData).reverse();
-                
-                workGrid.innerHTML = workIds.map(id => {
-                    const work = workData[id];
-                    return `
-                        <div class="work-item" onclick="showWorkDetail(${id})">
-                            <img src="${work.thumbnail}" alt="${work.title}">
-                            <div class="work-overlay">
-                                <div class="work-title">${work.title} (${work.year})</div>
-                                <div class="work-type">${work.type}</div>
-                                <div class="work-role">${work.role}</div>
-                            </div>
+            // Populate home page work grid (reverse order)
+            const workGrid = document.getElementById('workGrid');
+            const workIds = Object.keys(portfolioConfig.work).reverse();
+            
+            workGrid.innerHTML = workIds.map(id => {
+                const work = portfolioConfig.work[id];
+                return `
+                    <div class="work-item" onclick="showWorkDetail(${id})">
+                        <img src="${work.thumbnail}" alt="${work.title}" onerror="this.style.display='none'">
+                        <div class="work-overlay">
+                            <div class="work-title">${work.title} (${work.year})</div>
+                            <div class="work-type">${work.type}</div>
+                            <div class="work-role">${work.role}</div>
                         </div>
-                    `;
-                }).join('');
-
-                // Populate photography page
-                const photographyImages = await loadPhotographyImages();
-                const photoCollage = document.getElementById('photoCollage');
-                photoCollage.innerHTML = photographyImages.map((img, index) => `
-                    <div class="photo-item" onclick="openModal(${JSON.stringify(photographyImages).replace(/"/g, '&quot;')}, ${index})">
-                        <img src="${img}" alt="Photography ${index + 1}">
                     </div>
-                `).join('');
+                `;
+            }).join('');
 
-                // Populate crew work page
-                const crewImages = await loadCrewImages();
-                const crewCollage = document.getElementById('crewCollage');
-                crewCollage.innerHTML = crewImages.map((img, index) => `
-                    <div class="photo-item" onclick="openModal(${JSON.stringify(crewImages).replace(/"/g, '&quot;')}, ${index})">
-                        <img src="${img}" alt="Crew Work ${index + 1}">
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error initializing website:', error);
-            }
+            // Populate photography page
+            const photoCollage = document.getElementById('photoCollage');
+            photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.photography).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'">
+                </div>
+            `).join('');
+
+            // Populate crew work page
+            const crewCollage = document.getElementById('crewCollage');
+            crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.crew).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'">
+                </div>
+            `).join('');
         }
 
         // Start the application
