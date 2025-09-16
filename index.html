@@ -328,35 +328,6 @@
             color: #333;
         }
 
-        .debug-panel {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 12px;
-            max-width: 300px;
-            z-index: 300;
-        }
-
-        .debug-panel button {
-            background: #007acc;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            margin: 5px 0;
-            border-radius: 3px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .debug-panel button:hover {
-            background: #005a99;
-        }
-
         .project-link-btn {
             display: inline-flex;
             align-items: center;
@@ -381,6 +352,16 @@
             width: 20px;
             height: 20px;
             fill: currentColor;
+        }
+
+        /* Image optimization */
+        img {
+            loading: lazy;
+        }
+
+        /* Preload critical images */
+        .work-item img, #profileImage {
+            loading: eager;
         }
     </style>
 </head>
@@ -447,192 +428,11 @@
         </div>
     </div>
 
-    <!-- Debug Panel -->
-    <div class="debug-panel">
-        <div>Auto-Discovery Mode</div>
-        <div id="debugInfo">Scanning files...</div>
-        <button onclick="generateConfig()">Generate Config</button>
-        <button onclick="downloadConfig()">Download config.js</button>
-    </div>
-
     <script>
         let currentImages = [];
         let currentImageIndex = 0;
-        let workData = {};
-        let discoveredConfig = null;
 
-        // Auto-discovery functions
-        async function checkFileExists(path) {
-            try {
-                const response = await fetch(path, { method: 'HEAD' });
-                return response.ok;
-            } catch {
-                return false;
-            }
-        }
-
-        async function tryReadTextFile(path) {
-            try {
-                const response = await fetch(path);
-                if (response.ok) {
-                    return await response.text();
-                }
-            } catch {
-                // ignore
-            }
-            return null;
-        }
-
-        async function findProfileImage() {
-            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-            for (const ext of extensions) {
-                const path = `profile.${ext}`;
-                if (await checkFileExists(path)) {
-                    return path;
-                }
-            }
-            return null;
-        }
-
-        async function discoverWorkProjects() {
-            const work = {};
-            let foundAny = false;
-            
-            // Try work projects 1-50 (reasonable limit)
-            for (let i = 1; i <= 50; i++) {
-                const infoPath = `work/${i}/info.txt`;
-                const infoContent = await tryReadTextFile(infoPath);
-                
-                if (infoContent) {
-                    const lines = infoContent.trim().split('\n');
-                    const title = lines[0] || `Project ${i}`;
-                    const year = lines[1] || '';
-                    const type = lines[2] || '';
-                    const role = lines[3] || '';
-                    const info = lines[4] || '';
-                    const link = lines[5] || ''; // 6th line for link
-                    
-                    // Find thumbnail
-                    let thumbnail = null;
-                    const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-                    for (const ext of extensions) {
-                        const thumbPath = `work/${i}/thumbnail.${ext}`;
-                        if (await checkFileExists(thumbPath)) {
-                            thumbnail = thumbPath;
-                            break;
-                        }
-                    }
-                    
-                    // Find stills
-                    const stills = [];
-                    for (let j = 1; j <= 20; j++) { // Check up to 20 stills
-                        let found = false;
-                        for (const ext of extensions) {
-                            const stillPath = `work/${i}/stills/${j}.${ext}`;
-                            if (await checkFileExists(stillPath)) {
-                                stills.push(stillPath);
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) break;
-                    }
-                    
-                    // Find BTS photos
-                    const bts = [];
-                    for (let j = 1; j <=50; j++) { // Check up to 20 BTS
-                        let found = false;
-                        for (const ext of extensions) {
-                            const btsPath = `work/${i}/bts/${j}.${ext}`;
-                            if (await checkFileExists(btsPath)) {
-                                bts.push(btsPath);
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) break;
-                    }
-                    
-                    work[i] = {
-                        title,
-                        year,
-                        type,
-                        role,
-                        info,
-                        link,
-                        thumbnail,
-                        stills,
-                        bts
-                    };
-                    foundAny = true;
-                    
-                    document.getElementById('debugInfo').innerHTML = `Found ${Object.keys(work).length} projects...`;
-                }
-            }
-            
-            return foundAny ? work : {};
-        }
-
-        async function discoverPhotos(directory, limit = 50) {
-            const photos = [];
-            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-            
-            for (let i = 1; i <= limit; i++) {
-                let found = false;
-                for (const ext of extensions) {
-                    const photoPath = `${directory}/${i}.${ext}`;
-                    if (await checkFileExists(photoPath)) {
-                        photos.push(photoPath);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) break;
-            }
-            
-            return photos;
-        }
-
-        async function autoDiscover() {
-            document.getElementById('debugInfo').innerHTML = 'Discovering files...';
-            
-            const config = {
-                profileImage: await findProfileImage(),
-                work: await discoverWorkProjects(),
-                photography: await discoverPhotos('photography'),
-                crew: await discoverPhotos('crew')
-            };
-            
-            discoveredConfig = config;
-            
-            document.getElementById('debugInfo').innerHTML = `
-                Profile: ${config.profileImage ? '✓' : '✗'}<br>
-                Work: ${Object.keys(config.work).length} projects<br>
-                Photography: ${config.photography.length} photos<br>
-                Crew: ${config.crew.length} photos
-            `;
-            
-            return config;
-        }
-
-        function generateConfig() {
-            if (!discoveredConfig) return;
-            
-            const configText = `// Auto-generated portfolio configuration
-// Copy this to replace the portfolioConfig object in your HTML file
-
-const portfolioConfig = ${JSON.stringify(discoveredConfig, null, 2)};`;
-            
-            console.log('Generated Configuration:');
-            console.log(configText);
-            alert('Configuration generated! Check the browser console (F12) to copy it.');
-        }
-
-        function downloadConfig() {
-            if (!discoveredConfig) return;
-            
-            // Auto-generated portfolio configuration
-const portfolioConfig = {
+       const portfolioConfig = {
   "profileImage": "profile.jpeg",
   "work": {
     "1": {
@@ -1179,19 +979,6 @@ const portfolioConfig = {
   ]
 };
 
-            
-            const blob = new Blob([configText], { type: 'text/javascript' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'portfolio-config.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        // Regular portfolio functions
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -1226,7 +1013,7 @@ const portfolioConfig = {
         }
 
         function showWorkDetail(workId) {
-            const work = discoveredConfig.work[workId];
+            const work = portfolioConfig.work[workId];
             if (!work) return;
 
             const content = document.getElementById('workDetailContent');
@@ -1254,7 +1041,7 @@ const portfolioConfig = {
                 <div class="work-grid">
                     ${work.stills.map((img, index) => `
                         <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${index})">
-                            <img src="${img}" alt="Still ${index + 1}" onerror="this.style.display='none'">
+                            <img src="${img}" alt="Still ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                         </div>
                     `).join('')}
                 </div>
@@ -1262,7 +1049,7 @@ const portfolioConfig = {
                 <div class="photo-collage">
                     ${work.bts.map((img, index) => `
                         <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${work.stills.length + index})">
-                            <img src="${img}" alt="BTS ${index + 1}" onerror="this.style.display='none'">
+                            <img src="${img}" alt="BTS ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                         </div>
                     `).join('')}
                 </div>
@@ -1309,23 +1096,25 @@ const portfolioConfig = {
         });
 
         // Initialize the website
-        async function init() {
-            const config = await autoDiscover();
-            
+        function init() {
             // Load profile image
-            if (config.profileImage) {
-                document.getElementById('profileImage').src = config.profileImage;
+            if (portfolioConfig.profileImage) {
+                document.getElementById('profileImage').src = portfolioConfig.profileImage;
+                document.getElementById('profileImage').onerror = function() {
+                    this.style.display = 'none';
+                    console.warn('Could not load profile image:', portfolioConfig.profileImage);
+                };
             }
 
             // Populate home page work grid (reverse order)
             const workGrid = document.getElementById('workGrid');
-            const workIds = Object.keys(config.work).reverse();
+            const workIds = Object.keys(portfolioConfig.work).reverse();
             
             workGrid.innerHTML = workIds.map(id => {
-                const work = config.work[id];
+                const work = portfolioConfig.work[id];
                 return `
                     <div class="work-item" onclick="showWorkDetail(${id})">
-                        <img src="${work.thumbnail}" alt="${work.title}" onerror="this.style.display='none'">
+                        <img src="${work.thumbnail}" alt="${work.title}" onerror="this.style.display='none'" loading="eager">
                         <div class="work-overlay">
                             <div class="work-title">${work.title} (${work.year})</div>
                             <div class="work-type">${work.type}</div>
@@ -1337,17 +1126,17 @@ const portfolioConfig = {
 
             // Populate photography page
             const photoCollage = document.getElementById('photoCollage');
-            photoCollage.innerHTML = config.photography.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(config.photography).replace(/"/g, '&quot;')}, ${index})">
-                    <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'">
+            photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.photography).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
 
             // Populate crew work page
             const crewCollage = document.getElementById('crewCollage');
-            crewCollage.innerHTML = config.crew.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(config.crew).replace(/"/g, '&quot;')}, ${index})">
-                    <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'">
+            crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.crew).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
         }
