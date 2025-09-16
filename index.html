@@ -325,6 +325,35 @@
             line-height: 1.8;
             color: #333;
         }
+
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 300px;
+            z-index: 300;
+        }
+
+        .debug-panel button {
+            background: #007acc;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .debug-panel button:hover {
+            background: #005a99;
+        }
     </style>
 </head>
 <body>
@@ -390,71 +419,225 @@
         </div>
     </div>
 
+    <!-- Debug Panel -->
+    <div class="debug-panel">
+        <div>Auto-Discovery Mode</div>
+        <div id="debugInfo">Scanning files...</div>
+        <button onclick="generateConfig()">Generate Config</button>
+        <button onclick="downloadConfig()">Download config.js</button>
+    </div>
+
     <script>
         let currentImages = [];
         let currentImageIndex = 0;
         let workData = {};
+        let discoveredConfig = null;
 
-        // Configuration object - UPDATE THIS WITH YOUR ACTUAL FILE STRUCTURE
-        const portfolioConfig = {
-            profileImage: 'profile.jpg', // Change to your profile image filename
-            work: {
-                1: {
-                    title: 'Sample Project 1',
-                    year: '2024',
-                    type: 'Short Film',
-                    role: 'Director',
-                    info: 'This is a sample project description.',
-                    thumbnail: 'work/1/thumbnail.png',
-                    stills: ['work/1/stills/1.png', 'work/1/stills/2.png'],
-                    bts: ['work/1/bts/1.jpeg', 'work/1/bts/2.jpeg']
-                },
-                2: {
-                    title: 'Sample Project 2',
-                    year: '2023',
-                    type: 'Music Video',
-                    role: 'Cinematographer',
-                    info: 'This is another sample project description.',
-                    thumbnail: 'work/2/thumbnail.jpg',
-                    stills: ['work/2/stills/1.jpg', 'work/2/stills/2.jpg'],
-                    bts: ['work/2/bts/1.JPG']
+        // Auto-discovery functions
+        async function checkFileExists(path) {
+            try {
+                const response = await fetch(path, { method: 'HEAD' });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
+
+        async function tryReadTextFile(path) {
+            try {
+                const response = await fetch(path);
+                if (response.ok) {
+                    return await response.text();
                 }
-                // Add more work projects here...
-            },
-            photography: [
-                'photography/1.jpg',
-                'photography/2.jpg',
-                'photography/3.jpg'
-                // Add more photography images here...
-            ],
-            crew: [
-                'crew/1.jpg',
-                'crew/2.jpg',
-                'crew/3.jpg'
-                // Add more crew work images here...
-            ]
-        };
+            } catch {
+                // ignore
+            }
+            return null;
+        }
 
+        async function findProfileImage() {
+            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            for (const ext of extensions) {
+                const path = `profile.${ext}`;
+                if (await checkFileExists(path)) {
+                    return path;
+                }
+            }
+            return null;
+        }
+
+        async function discoverWorkProjects() {
+            const work = {};
+            let foundAny = false;
+            
+            // Try work projects 1-50 (reasonable limit)
+            for (let i = 1; i <= 50; i++) {
+                const infoPath = `work/${i}/info.txt`;
+                const infoContent = await tryReadTextFile(infoPath);
+                
+                if (infoContent) {
+                    const lines = infoContent.trim().split('\n');
+                    const title = lines[0] || `Project ${i}`;
+                    const year = lines[1] || '';
+                    const type = lines[2] || '';
+                    const role = lines[3] || '';
+                    const info = lines[4] || '';
+                    
+                    // Find thumbnail
+                    let thumbnail = null;
+                    const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                    for (const ext of extensions) {
+                        const thumbPath = `work/${i}/thumbnail.${ext}`;
+                        if (await checkFileExists(thumbPath)) {
+                            thumbnail = thumbPath;
+                            break;
+                        }
+                    }
+                    
+                    // Find stills
+                    const stills = [];
+                    for (let j = 1; j <= 20; j++) { // Check up to 20 stills
+                        let found = false;
+                        for (const ext of extensions) {
+                            const stillPath = `work/${i}/stills/${j}.${ext}`;
+                            if (await checkFileExists(stillPath)) {
+                                stills.push(stillPath);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) break;
+                    }
+                    
+                    // Find BTS photos
+                    const bts = [];
+                    for (let j = 1; j <= 20; j++) { // Check up to 20 BTS
+                        let found = false;
+                        for (const ext of extensions) {
+                            const btsPath = `work/${i}/bts/${j}.${ext}`;
+                            if (await checkFileExists(btsPath)) {
+                                bts.push(btsPath);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) break;
+                    }
+                    
+                    work[i] = {
+                        title,
+                        year,
+                        type,
+                        role,
+                        info,
+                        thumbnail,
+                        stills,
+                        bts
+                    };
+                    foundAny = true;
+                    
+                    document.getElementById('debugInfo').innerHTML = `Found ${Object.keys(work).length} projects...`;
+                }
+            }
+            
+            return foundAny ? work : {};
+        }
+
+        async function discoverPhotos(directory, limit = 50) {
+            const photos = [];
+            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            
+            for (let i = 1; i <= limit; i++) {
+                let found = false;
+                for (const ext of extensions) {
+                    const photoPath = `${directory}/${i}.${ext}`;
+                    if (await checkFileExists(photoPath)) {
+                        photos.push(photoPath);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) break;
+            }
+            
+            return photos;
+        }
+
+        async function autoDiscover() {
+            document.getElementById('debugInfo').innerHTML = 'Discovering files...';
+            
+            const config = {
+                profileImage: await findProfileImage(),
+                work: await discoverWorkProjects(),
+                photography: await discoverPhotos('photography'),
+                crew: await discoverPhotos('crew')
+            };
+            
+            discoveredConfig = config;
+            
+            document.getElementById('debugInfo').innerHTML = `
+                Profile: ${config.profileImage ? '✓' : '✗'}<br>
+                Work: ${Object.keys(config.work).length} projects<br>
+                Photography: ${config.photography.length} photos<br>
+                Crew: ${config.crew.length} photos
+            `;
+            
+            return config;
+        }
+
+        function generateConfig() {
+            if (!discoveredConfig) return;
+            
+            const configText = `// Auto-generated portfolio configuration
+// Copy this to replace the portfolioConfig object in your HTML file
+
+const portfolioConfig = ${JSON.stringify(discoveredConfig, null, 2)};`;
+            
+            console.log('Generated Configuration:');
+            console.log(configText);
+            alert('Configuration generated! Check the browser console (F12) to copy it.');
+        }
+
+        function downloadConfig() {
+            if (!discoveredConfig) return;
+            
+            const configText = `// Auto-generated portfolio configuration
+const portfolioConfig = ${JSON.stringify(discoveredConfig, null, 2)};
+
+// To use this config:
+// 1. Copy the portfolioConfig object
+// 2. Replace the existing portfolioConfig in your HTML file
+// 3. Remove the auto-discovery code and debug panel
+// 4. Deploy to GitHub Pages
+`;
+            
+            const blob = new Blob([configText], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio-config.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Regular portfolio functions
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
-            // Remove active class from nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Show selected page
             document.getElementById(pageId).classList.add('active');
-            
-            // Add active class to corresponding nav item
             event.target.classList.add('active');
         }
 
         function showWorkDetail(workId) {
-            const work = portfolioConfig.work[workId];
+            const work = discoveredConfig.work[workId];
             if (!work) return;
 
             const content = document.getElementById('workDetailContent');
@@ -526,20 +709,20 @@
         });
 
         // Initialize the website
-        function init() {
+        async function init() {
+            const config = await autoDiscover();
+            
             // Load profile image
-            document.getElementById('profileImage').src = portfolioConfig.profileImage;
-            document.getElementById('profileImage').onerror = function() {
-                this.style.display = 'none';
-                console.warn('Could not load profile image:', portfolioConfig.profileImage);
-            };
+            if (config.profileImage) {
+                document.getElementById('profileImage').src = config.profileImage;
+            }
 
             // Populate home page work grid (reverse order)
             const workGrid = document.getElementById('workGrid');
-            const workIds = Object.keys(portfolioConfig.work).reverse();
+            const workIds = Object.keys(config.work).reverse();
             
             workGrid.innerHTML = workIds.map(id => {
-                const work = portfolioConfig.work[id];
+                const work = config.work[id];
                 return `
                     <div class="work-item" onclick="showWorkDetail(${id})">
                         <img src="${work.thumbnail}" alt="${work.title}" onerror="this.style.display='none'">
@@ -554,16 +737,16 @@
 
             // Populate photography page
             const photoCollage = document.getElementById('photoCollage');
-            photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.photography).replace(/"/g, '&quot;')}, ${index})">
+            photoCollage.innerHTML = config.photography.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(config.photography).replace(/"/g, '&quot;')}, ${index})">
                     <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'">
                 </div>
             `).join('');
 
             // Populate crew work page
             const crewCollage = document.getElementById('crewCollage');
-            crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.crew).replace(/"/g, '&quot;')}, ${index})">
+            crewCollage.innerHTML = config.crew.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(config.crew).replace(/"/g, '&quot;')}, ${index})">
                     <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'">
                 </div>
             `).join('');
