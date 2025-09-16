@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micah Lai - Film Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #E7E3DC;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: #fff;
+            padding: 0 40px;
+            z-index: 100;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h1 {
+            margin-right: 50px;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #333;
+        }
+
+        .nav-item {
+            display: inline-block;
+            padding: 15px 25px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #f0f0f0;
+            color: #333;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .work-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .work-item:hover img {
+            filter: brightness(0.4);
+            transform: scale(1.05);
+        }
+
+        .work-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .work-item:hover .work-overlay {
+            opacity: 1;
+        }
+
+        .work-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .work-type, .work-role {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .photo-collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            width: 100%;
+            justify-items: center;
+        }
+
+        .photo-item {
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: none;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255,255,255,1);
+        }
+
+        .modal-prev {
+            left: -60px;
+        }
+
+        .modal-next {
+            right: -60px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            color: #333;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,1);
+        }
+
+        .work-detail {
+            width: 100%;
+        }
+
+        .work-detail h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .work-detail h2 {
+            font-size: 20px;
+            color: #666;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .work-detail p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin: 40px 0 20px 0;
+            color: #333;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 200;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .back-button:hover {
+            background: #f8f8f8;
+            border-color: #ccc;
+        }
+
+        .bio-section {
+            width: 100%;
+            background: #C0C7B9;
+            margin-top: 60px;
+            padding: 60px 40px;
+        }
+
+        .bio-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #333;
+            font-weight: 300;
+        }
+
+        .bio-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bio-photo {
+            flex-shrink: 0;
+        }
+
+        .bio-photo img {
+            max-width: 350px;
+            height: auto;
+            display: block;
+        }
+
+        .bio-text {
+            flex: 1;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>Micah Lai</h1>
+        <button class="nav-item active" onclick="showPage('home')">Home</button>
+        <button class="nav-item" onclick="showPage('photography')">Photography</button>
+        <button class="nav-item" onclick="showPage('crew')">Crew Work</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="work-grid" id="workGrid">
+                <!-- Work items will be populated by JavaScript -->
+            </div>
+            
+            <div class="bio-section">
+                <h2 class="bio-title">Bio</h2>
+                <div class="bio-content">
+                    <div class="bio-photo">
+                        <img id="profileImage" src="" alt="Profile Photo">
+                    </div>
+                    <div class="bio-text">
+                        [PLACEHOLDER BIO TEXT]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photography Page -->
+        <div id="photography" class="page">
+            <h1 style="margin-bottom: 30px;">Photography</h1>
+            <div class="photo-collage" id="photoCollage">
+                <!-- Photos will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Crew Work Page -->
+        <div id="crew" class="page">
+            <h1 style="margin-bottom: 30px;">Crew Work</h1>
+            <div class="photo-collage" id="crewCollage">
+                <!-- Photos will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Work Detail Page -->
+        <div id="workDetail" class="page">
+            <button class="back-button" onclick="showPage('home')">← Back to Home</button>
+            <div class="work-detail" id="workDetailContent">
+                <!-- Work detail content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for image viewing -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-nav modal-prev" onclick="prevImage()">‹</button>
+            <img id="modalImage" src="" alt="">
+            <button class="modal-nav modal-next" onclick="nextImage()">›</button>
+        </div>
+    </div>
+
+    <script>
+        let currentImages = [];
+        let currentImageIndex = 0;
+        let workData = {};
+
+        // Load work data from file system using fetch API
+        async function loadWorkData() {
+            const workData = {};
+            let workIndex = 1;
+            
+            while (true) {
+                try {
+                    // Try to read the info.txt file for this work item
+                    const infoPath = `work/${workIndex}/info.txt`;
+                    const infoResponse = await fetch(infoPath);
+                    if (!infoResponse.ok) break;
+                    
+                    const infoContent = await infoResponse.text();
+                    const lines = infoContent.trim().split('\n');
+                    
+                    // Parse info.txt (title, year, type, role, additional info)
+                    const title = lines[0] || '';
+                    const year = lines[1] || '';
+                    const type = lines[2] || '';
+                    const role = lines[3] || '';
+                    const info = lines[4] || '';
+                    
+                    // Read thumbnail
+                    let thumbnail = '';
+                    const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+                    for (const ext of extensions) {
+                        try {
+                            const thumbPath = `work/${workIndex}/thumbnail.${ext}`;
+                            const thumbResponse = await fetch(thumbPath);
+                            if (thumbResponse.ok) {
+                                thumbnail = thumbPath;
+                                break;
+                            }
+                        } catch (e) {
+                            // Continue to next extension
+                        }
+                    }
+                    
+                    // Load stills
+                    const stills = [];
+                    let stillIndex = 1;
+                    while (true) {
+                        let found = false;
+                        
+                        for (const ext of extensions) {
+                            try {
+                                const stillPath = `work/${workIndex}/stills/${stillIndex}.${ext}`;
+                                const stillResponse = await fetch(stillPath);
+                                if (stillResponse.ok) {
+                                    stills.push(stillPath);
+                                    found = true;
+                                    break;
+                                }
+                            } catch (e) {
+                                // Continue to next extension
+                            }
+                        }
+                        
+                        if (!found) break;
+                        stillIndex++;
+                    }
+                    
+                    // Load BTS photos
+                    const bts = [];
+                    let btsIndex = 1;
+                    while (true) {
+                        let found = false;
+                        
+                        for (const ext of extensions) {
+                            try {
+                                const btsPath = `work/${workIndex}/bts/${btsIndex}.${ext}`;
+                                const btsResponse = await fetch(btsPath);
+                                if (btsResponse.ok) {
+                                    bts.push(btsPath);
+                                    found = true;
+                                    break;
+                                }
+                            } catch (e) {
+                                // Continue to next extension
+                            }
+                        }
+                        
+                        if (!found) break;
+                        btsIndex++;
+                    }
+                    
+                    workData[workIndex] = {
+                        title,
+                        year,
+                        type,
+                        role,
+                        info,
+                        thumbnail,
+                        stills,
+                        bts
+                    };
+                    
+                    workIndex++;
+                } catch (e) {
+                    // No more work items found
+                    break;
+                }
+            }
+            
+            return workData;
+        }
+
+        async function loadPhotographyImages() {
+            const images = [];
+            let photoIndex = 1;
+            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+            
+            while (true) {
+                let found = false;
+                
+                for (const ext of extensions) {
+                    try {
+                        const photoPath = `photography/${photoIndex}.${ext}`;
+                        const photoResponse = await fetch(photoPath);
+                        if (photoResponse.ok) {
+                            images.push(photoPath);
+                            found = true;
+                            break;
+                        }
+                    } catch (e) {
+                        // Continue to next extension
+                    }
+                }
+                
+                if (!found) break;
+                photoIndex++;
+            }
+            
+            return images;
+        }
+
+        async function loadCrewImages() {
+            const images = [];
+            let crewIndex = 1;
+            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+            
+            while (true) {
+                let found = false;
+                
+                for (const ext of extensions) {
+                    try {
+                        const crewPath = `crew/${crewIndex}.${ext}`;
+                        const crewResponse = await fetch(crewPath);
+                        if (crewResponse.ok) {
+                            images.push(crewPath);
+                            found = true;
+                            break;
+                        }
+                    } catch (e) {
+                        // Continue to next extension
+                    }
+                }
+                
+                if (!found) break;
+                crewIndex++;
+            }
+            
+            return images;
+        }
+
+        async function loadProfileImage() {
+            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+            for (const ext of extensions) {
+                try {
+                    const profilePath = `profile.${ext}`;
+                    const profileResponse = await fetch(profilePath);
+                    if (profileResponse.ok) {
+                        return profilePath;
+                    }
+                } catch (e) {
+                    // Continue to next extension
+                }
+            }
+            return null;
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Remove active class from nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Add active class to corresponding nav item
+            event.target.classList.add('active');
+        }
+
+        function showWorkDetail(workId) {
+            const work = workData[workId];
+            if (!work) return;
+
+            const content = document.getElementById('workDetailContent');
+            content.innerHTML = `
+                <h1>${work.title} (${work.year})</h1>
+                <h2>${work.type}</h2>
+                <h2>${work.role}</h2>
+                <p>${work.info}</p>
+                
+                <div class="section-title">Stills</div>
+                <div class="work-grid">
+                    ${work.stills.map((img, index) => `
+                        <div class="photo-item" onclick="openModal([...workData[${workId}].stills, ...workData[${workId}].bts], ${index})">
+                            <img src="${img}" alt="Still ${index + 1}">
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="section-title">Behind the Scenes</div>
+                <div class="photo-collage">
+                    ${work.bts.map((img, index) => `
+                        <div class="photo-item" onclick="openModal([...workData[${workId}].stills, ...workData[${workId}].bts], ${work.stills.length + index})">
+                            <img src="${img}" alt="BTS ${index + 1}">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            showPage('workDetail');
+        }
+
+        function openModal(images, startIndex = 0) {
+            currentImages = images;
+            currentImageIndex = startIndex;
+            document.getElementById('modalImage').src = currentImages[currentImageIndex];
+            document.getElementById('imageModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+            document.getElementById('modalImage').src = currentImages[currentImageIndex];
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+            document.getElementById('modalImage').src = currentImages[currentImageIndex];
+        }
+
+        // Close modal on click outside image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('imageModal').classList.contains('active')) {
+                if (e.key === 'Escape') closeModal();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        // Initialize the website
+        async function init() {
+            try {
+                // Load profile image
+                const profileImagePath = await loadProfileImage();
+                if (profileImagePath) {
+                    document.getElementById('profileImage').src = profileImagePath;
+                } else {
+                    console.warn('Could not load profile image');
+                }
+
+                workData = await loadWorkData();
+                
+                // Populate home page work grid (reverse order)
+                const workGrid = document.getElementById('workGrid');
+                const workIds = Object.keys(workData).reverse();
+                
+                workGrid.innerHTML = workIds.map(id => {
+                    const work = workData[id];
+                    return `
+                        <div class="work-item" onclick="showWorkDetail(${id})">
+                            <img src="${work.thumbnail}" alt="${work.title}">
+                            <div class="work-overlay">
+                                <div class="work-title">${work.title} (${work.year})</div>
+                                <div class="work-type">${work.type}</div>
+                                <div class="work-role">${work.role}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Populate photography page
+                const photographyImages = await loadPhotographyImages();
+                const photoCollage = document.getElementById('photoCollage');
+                photoCollage.innerHTML = photographyImages.map((img, index) => `
+                    <div class="photo-item" onclick="openModal(${JSON.stringify(photographyImages).replace(/"/g, '&quot;')}, ${index})">
+                        <img src="${img}" alt="Photography ${index + 1}">
+                    </div>
+                `).join('');
+
+                // Populate crew work page
+                const crewImages = await loadCrewImages();
+                const crewCollage = document.getElementById('crewCollage');
+                crewCollage.innerHTML = crewImages.map((img, index) => `
+                    <div class="photo-item" onclick="openModal(${JSON.stringify(crewImages).replace(/"/g, '&quot;')}, ${index})">
+                        <img src="${img}" alt="Crew Work ${index + 1}">
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error initializing website:', error);
+            }
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
