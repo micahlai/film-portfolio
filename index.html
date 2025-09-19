@@ -494,14 +494,46 @@
         .work-item img, #profileImage {
             loading: eager;
         }
+
+        /* Low-res placeholder effect */
+        .image-placeholder {
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fade-in.loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h1>Micah Lai</h1>
-        <button class="nav-item active" onclick="showPage('home')">Home</button>
-        <button class="nav-item" onclick="showPage('photography')">Photography</button>
-        <button class="nav-item" onclick="showPage('crew')">Crew Work</button>
+        <div class="sidebar-left">
+            <h1>Micah Lai</h1>
+            <div class="nav-items" id="navItems">
+                <button class="nav-item active" onclick="showPage('home')">Home</button>
+                <button class="nav-item" onclick="showPage('photography')">Photography</button>
+                <button class="nav-item" onclick="showPage('graphic')">Graphic Design</button>
+                <button class="nav-item" onclick="showPage('crew')">Crew Work</button>
+            </div>
+        </div>
+        <div class="sidebar-right">
+            <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+            <a href="https://instagram.com/micahlai.ftv" target="_blank" class="instagram-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
+        </div>
     </div>
 
     <div class="main-content">
@@ -518,7 +550,8 @@
                         <img id="profileImage" src="" alt="Profile Photo">
                     </div>
                     <div class="bio-text">
-                        Hello, my name is Micah Lai and I’m a student filmmaker based in Orange County, CA. My work includes cinematography for narratives as well as 1st Assistant Camera works.
+                        
+Hello, my name is Micah Lai and I’m a student filmmaker based in Orange County, CA. My work includes cinematography for narratives as well as 1st Assistant Camera works.
                     </div>
                 </div>
             </div>
@@ -526,15 +559,23 @@
 
         <!-- Photography Page -->
         <div id="photography" class="page">
-            <h1 style="margin-bottom: 30px;">Photography</h1>
+            <!-- <h1 style="margin-bottom: 30px;">Photography</h1> -->
             <div class="photo-collage" id="photoCollage">
+                <!-- Photos will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Graphic Design Page -->
+        <div id="graphic" class="page">
+            <!-- <h1 style="margin-bottom: 30px;">Graphic Design</h1> -->
+            <div class="photo-collage" id="graphicCollage">
                 <!-- Photos will be populated by JavaScript -->
             </div>
         </div>
 
         <!-- Crew Work Page -->
         <div id="crew" class="page">
-            <h1 style="margin-bottom: 30px;">Crew Work</h1>
+            <!-- <h1 style="margin-bottom: 30px;">Crew Work</h1> -->
             <div class="photo-collage" id="crewCollage">
                 <!-- Photos will be populated by JavaScript -->
             </div>
@@ -1082,6 +1123,20 @@
     "photography/20.jpg",
     "photography/21.jpg"
   ],
+  "graphic":[
+    "graphic-design/1.png",
+    "graphic-design/2.png",
+    "graphic-design/3.png",
+    "graphic-design/4.jpg",
+    "graphic-design/5.png",
+    "graphic-design/6.png",
+    "graphic-design/7.png",
+    "graphic-design/8.png",
+    "graphic-design/9.png",
+    "graphic-design/10.png",
+    "graphic-design/11.png",
+    "graphic-design/12.png",
+  ],
   "crew": [
     "crew/1.jpeg",
     "crew/2.jpeg",
@@ -1112,7 +1167,15 @@
   ]
 };
 
+        function toggleMenu() {
+            const navItems = document.getElementById('navItems');
+            navItems.classList.toggle('show');
+        }
+
         function showPage(pageId) {
+            // Close mobile menu
+            document.getElementById('navItems').classList.remove('show');
+            
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
@@ -1123,6 +1186,50 @@
             
             document.getElementById(pageId).classList.add('active');
             event.target.classList.add('active');
+        }
+
+        // Progressive image loading
+        function createLowResImage(src) {
+            // Create a low-res version path by adding a suffix or using a smaller size
+            // For now, we'll use a simple approach with a placeholder
+            return src; // In production, you'd serve actual low-res versions
+        }
+
+        function loadImageProgressively(img, src) {
+            img.classList.add('fade-in');
+            
+            // Load low-res first (placeholder for now)
+            img.src = src;
+            
+            // Create high-res image
+            const highResImg = new Image();
+            highResImg.onload = function() {
+                img.src = highResImg.src;
+                img.classList.add('loaded');
+            };
+            highResImg.src = src;
+        }
+
+        function preloadCriticalImages() {
+            const criticalImages = [];
+            
+            // Add work thumbnails to critical images
+            Object.values(portfolioConfig.work).forEach(work => {
+                if (work.thumbnail) {
+                    criticalImages.push(work.thumbnail);
+                }
+            });
+            
+            // Add profile image
+            if (portfolioConfig.profileImage) {
+                criticalImages.push(portfolioConfig.profileImage);
+            }
+            
+            // Preload critical images
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
         }
 
         function getIconForLink(url) {
@@ -1262,6 +1369,14 @@
             photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
                 <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.photography).replace(/"/g, '&quot;')}, ${index})">
                     <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                </div>
+            `).join('');
+                
+            // Populate graphic design page
+            const graphicCollage = document.getElementById('graphicCollage');
+            graphicCollage.innerHTML = portfolioConfig.graphic.map((img, index) => `
+                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.graphic).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="${img}" alt="Graphic Design ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
 

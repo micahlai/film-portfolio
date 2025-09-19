@@ -368,7 +368,7 @@ const portfolioConfig = {
       "year": "2025",
       "type": "Film Festival",
       "role": "Producer, Director",
-      "info": "Orange County 48 Hour Film Festival students create a film from start to finish in 48 hrs with a common theme.",
+      "info": "Orange County 48 Hour Film Festival students create a film from start to finish in 48 hrs with a common theme. We had 18 total submission with 80 participants among 11 different Orange County high schools.",
       "link": "https://www.instagram.com/oc.48hr.filmfest/",
       "thumbnail": "work/14/thumbnail.jpg",
       "stills": [],
