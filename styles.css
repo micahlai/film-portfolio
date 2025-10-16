@@ -397,23 +397,21 @@ body {
 }
 
 .video-container {
-    position: relative;
+    display: block;
+    width: 100%;
     max-width: 800px;
-    /* padding-bottom: 56.25%; 16:9 aspect ratio */
-    /* height: 0; */
+    aspect-ratio: 16 / 9;
     overflow: hidden;
-    aspect-ratio: 16/9;
-    margin: 2rem auto; /* centers and adds spacing */
+    margin: 2rem auto; /* centers it horizontally */
 }
 
 .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     border: 0;
+    display: block;
 }
+
 
 @media (max-width: 768px) {
     .sidebar {
