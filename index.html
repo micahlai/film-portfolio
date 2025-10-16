@@ -3,17 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Micah Lai</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJKLYY76LC"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CJKLYY76LC');
-    </script>
+    <title>Micah Lai - Film Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -53,8 +43,7 @@
             margin-right: 50px;
             font-size: 24px;
             font-weight: 300;
-            font-family: 'bodoni',serif;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: #333;
         }
 
@@ -104,7 +93,6 @@
             fill: white;
         }
 
-        /* Mobile menu */
         .menu-toggle {
             display: none;
             background: none;
@@ -116,96 +104,6 @@
 
         .nav-items.mobile-hidden {
             display: flex;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .sidebar {
-                padding: 0 20px;
-            }
-
-            .sidebar h1 {
-                margin-right: 20px;
-                font-size: 20px;
-            }
-
-            .nav-items {
-                display: none;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                border-bottom: 1px solid #ddd;
-            }
-
-            .nav-items.show {
-                display: flex;
-            }
-
-            .nav-item {
-                width: 100%;
-                text-align: left;
-                margin: 0;
-                border-bottom: 1px solid #f0f0f0;
-            }
-
-            .nav-item:last-child {
-                border-bottom: none;
-            }
-
-            .menu-toggle {
-                display: block;
-                margin-right: 15px;
-            }
-
-            .bio-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .bio-photo {
-                align-self: center;
-                margin-bottom: 30px;
-            }
-
-            .bio-photo img {
-                max-width: 250px;
-            }
-
-            .work-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .photo-collage {
-                columns: 2;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-content {
-                padding: 20px;
-            }
-
-            .bio-section {
-                padding: 40px 20px;
-            }
-
-            .bio-photo img {
-                max-width: 200px;
-            }
-
-            .photo-collage {
-                columns: 1;
-            }
-        }
-        @font-face {
-        font-family: 'bodoni'; 
-        src: url('bodoni.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal; 
         }
 
         .main-content {
@@ -220,7 +118,7 @@
         .page {
             display: none;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
         }
 
         .page.active {
@@ -411,12 +309,6 @@
             color: #555;
         }
 
-        .section-title {
-            font-size: 24px;
-            margin: 40px 0 20px 0;
-            color: #333;
-        }
-
         .back-button {
             position: fixed;
             top: 100px;
@@ -429,6 +321,7 @@
             border-radius: 5px;
             z-index: 200;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-decoration: none;
         }
 
         .back-button:hover {
@@ -502,24 +395,12 @@
             fill: currentColor;
         }
 
-        /* Image optimization */
         img {
             loading: lazy;
         }
 
-        /* Preload critical images */
         .work-item img, #profileImage {
             loading: eager;
-        }
-
-        /* Low-res placeholder effect */
-        .image-placeholder {
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 14px;
         }
 
         .fade-in {
@@ -530,37 +411,129 @@
         .fade-in.loaded {
             opacity: 1;
         }
-    </style>
-    <style>
-    .video-container {
-      position: relative;
-      max-width: 800px;
-      /* padding-bottom: 56.25%; 16:9 aspect ratio */
-      /* height: 0; */
-      overflow: hidden;
-      aspect-ratio: 16/9;
-      margin: 2rem auto; /* centers and adds spacing */
-    }
 
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-  </style>
+        .debug-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 300px;
+            z-index: 300;
+        }
+
+        .debug-panel button {
+            background: #007acc;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .debug-panel button:hover {
+            background: #005a99;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                padding: 0 20px;
+            }
+
+            .sidebar h1 {
+                margin-right: 20px;
+                font-size: 20px;
+            }
+
+            .nav-items {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #ddd;
+            }
+
+            .nav-items.show {
+                display: flex;
+            }
+
+            .nav-item {
+                width: 100%;
+                text-align: left;
+                margin: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-right: 15px;
+            }
+
+            .bio-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .bio-photo {
+                align-self: center;
+                margin-bottom: 30px;
+            }
+
+            .bio-photo img {
+                max-width: 250px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-collage {
+                columns: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 20px;
+            }
+
+            .bio-section {
+                padding: 40px 20px;
+            }
+
+            .bio-photo img {
+                max-width: 200px;
+            }
+
+            .photo-collage {
+                columns: 1;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-left">
-            <h1><b>Micah Lai</b></h1>
+            <h1>Micah Lai</h1>
             <div class="nav-items" id="navItems">
-                <button class="nav-item active" onclick="showPage('home')">home</button>
-                <button class="nav-item" onclick="showPage('photography')">photography</button>
-                <button class="nav-item" onclick="showPage('graphic')">graphic design</button>
-                <button class="nav-item" onclick="showPage('crew')">crew</button>
+                <a href="?page=home" class="nav-item">Home</a>
+                <a href="?page=photography" class="nav-item">Photography</a>
+                <a href="?page=graphic" class="nav-item">Graphic Design</a>
+                <a href="?page=crew" class="nav-item">Crew Work</a>
             </div>
         </div>
         <div class="sidebar-right">
@@ -570,67 +543,48 @@
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
             </a>
-            
         </div>
     </div>
 
     <div class="main-content">
         <!-- Home Page -->
-        <div id="home" class="page active">
-            <div class="video-container">
-                <iframe 
-                src="https://www.youtube.com/embed/kASTIVtnwjY" 
-                allowfullscreen>
-                </iframe>
-            </div>
-            <div class="work-grid" id="workGrid">
-                <!-- Work items will be populated by JavaScript -->
-            </div>
-            
+        <div id="homePage" class="page">
+            <div class="work-grid" id="workGrid"></div>
             <div class="bio-section">
-                <!-- <h2 class="bio-title">Bio</h2> -->
+                <h2 class="bio-title">Bio</h2>
                 <div class="bio-content">
                     <div class="bio-photo">
                         <img id="profileImage" src="" alt="Profile Photo">
                     </div>
                     <div class="bio-text">
-                        
-Hey! My name is Micah Lai. I'm a current student at Cornell University studying Electrical & Computer Engineering in the college of engineering. Film production is one of my biggest passions. I graduated from Orange County School of the Arts in the Film & Television program. I mainly work as a cinematographer and 1st assistant camera for narratives but also do some industrial/freelance work on the side.
+                        [PLACEHOLDER BIO TEXT]
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Photography Page -->
-        <div id="photography" class="page">
-            <!-- <h1 style="margin-bottom: 30px;">Photography</h1> -->
-            <div class="photo-collage" id="photoCollage">
-                <!-- Photos will be populated by JavaScript -->
-            </div>
+        <div id="photographyPage" class="page">
+            <h1 style="margin-bottom: 30px;">Photography</h1>
+            <div class="photo-collage" id="photoCollage"></div>
         </div>
 
         <!-- Graphic Design Page -->
-        <div id="graphic" class="page">
-            <!-- <h1 style="margin-bottom: 30px;">Graphic Design</h1> -->
-            <div class="photo-collage" id="graphicCollage">
-                <!-- Photos will be populated by JavaScript -->
-            </div>
+        <div id="graphicPage" class="page">
+            <h1 style="margin-bottom: 30px;">Graphic Design</h1>
+            <div class="photo-collage" id="graphicCollage"></div>
         </div>
 
         <!-- Crew Work Page -->
-        <div id="crew" class="page">
-            <!-- <h1 style="margin-bottom: 30px;">Crew Work</h1> -->
-            <div class="photo-collage" id="crewCollage">
-                <!-- Photos will be populated by JavaScript -->
-            </div>
+        <div id="crewPage" class="page">
+            <h1 style="margin-bottom: 30px;">Crew Work</h1>
+            <div class="photo-collage" id="crewCollage"></div>
         </div>
 
         <!-- Work Detail Page -->
-        <div id="workDetail" class="page">
-            <button class="back-button" onclick="showPage('home')">← Back to Home</button>
-            <div class="work-detail" id="workDetailContent">
-                <!-- Work detail content will be populated by JavaScript -->
-            </div>
+        <div id="projectPage" class="page">
+            <a href="?page=home" class="back-button">← Back to Home</a>
+            <div class="work-detail" id="workDetailContent"></div>
         </div>
     </div>
 
@@ -644,704 +598,246 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
         </div>
     </div>
 
+    <!-- Debug Panel -->
+    <div class="debug-panel" id="debugPanel" style="display: none;">
+        <div>Auto-Discovery Mode</div>
+        <div id="debugInfo">Scanning files...</div>
+        <button onclick="generateConfig()">Generate Config</button>
+        <button onclick="downloadConfig()">Download config.js</button>
+    </div>
+
     <script>
+        // TOGGLE AUTO-DISCOVERY MODE: Comment out the line below to disable
+        const AUTO_DISCOVERY_MODE = true;
+
         let currentImages = [];
         let currentImageIndex = 0;
+        let discoveredConfig = null;
+        let portfolioConfig = null;
 
-        // REPLACE THIS CONFIGURATION WITH YOUR ACTUAL FILES
-        // Update this object with your real file paths and project information
-        const portfolioConfig = {
-  "profileImage": "profile.jpeg",
-  "work": {
-    "1": {
-      "title": "Hiding in Plain Sight",
-      "year": "2023",
-      "type": "Drama Short Film",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=7ntooo_Zoug",
-      "thumbnail": "work/1/thumbnail.png",
-      "stills": [
-        "work/1/stills/1.png",
-        "work/1/stills/2.png",
-        "work/1/stills/3.png",
-        "work/1/stills/4.png",
-        "work/1/stills/5.png"
-      ],
-      "bts": [
-        "work/1/bts/1.jpeg",
-        "work/1/bts/2.jpeg",
-        "work/1/bts/3.jpeg"
-      ]
-    },
-    "2": {
-      "title": "The Manor Episode 1",
-      "year": "2023",
-      "type": "Drama Web Series",
-      "role": "Cinematographer",
-      "info": "",
-      "link": "",
-      "thumbnail": "work/2/thumbnail.jpg",
-      "stills": [
-        "work/2/stills/1.jpg",
-        "work/2/stills/2.jpg",
-        "work/2/stills/3.jpg",
-        "work/2/stills/4.jpg",
-        "work/2/stills/5.jpg",
-        "work/2/stills/6.jpg",
-        "work/2/stills/7.jpg",
-        "work/2/stills/8.jpg",
-        "work/2/stills/9.jpg",
-        "work/2/stills/10.jpg",
-        "work/2/stills/11.jpg",
-        "work/2/stills/12.jpg"
-      ],
-      "bts": [
-        "work/2/bts/1.jpg",
-        "work/2/bts/2.jpeg",
-        "work/2/bts/3.jpeg",
-        "work/2/bts/4.jpeg",
-        "work/2/bts/5.jpeg",
-        "work/2/bts/6.jpeg"
-      ]
-    },
-    "3": {
-      "title": "Tidal Bonds",
-      "year": "2023",
-      "type": "Drama Short Film",
-      "role": "Writer, Director",
-      "info": "Bronze award - 2023 Aquarium of the Pacific Film Festival",
-      "link": "https://www.youtube.com/watch?v=BV-6J14Aqsw",
-      "thumbnail": "work/3/thumbnail.png",
-      "stills": [
-        "work/3/stills/1.png",
-        "work/3/stills/2.png",
-        "work/3/stills/3.png",
-        "work/3/stills/4.png",
-        "work/3/stills/5.png"
-      ],
-      "bts": []
-    },
-    "4": {
-      "title": "VEX Robotics Over Under Regional Reveal",
-      "year": "2024",
-      "type": "Promotional",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=VV8Yw-59PoQ",
-      "thumbnail": "work/4/thumbnail.jpeg",
-      "stills": [
-        "work/4/stills/1.jpeg",
-        "work/4/stills/2.jpeg",
-        "work/4/stills/3.jpeg",
-        "work/4/stills/4.jpeg",
-        "work/4/stills/5.jpeg",
-        "work/4/stills/6.jpeg",
-        "work/4/stills/7.jpeg",
-        "work/4/stills/8.jpeg",
-        "work/4/stills/9.jpeg",
-        "work/4/stills/10.jpeg"
-      ],
-      "bts": [
-        "work/4/bts/1.jpeg",
-        "work/4/bts/2.jpeg",
-        "work/4/bts/3.jpeg",
-        "work/4/bts/4.jpeg",
-        "work/4/bts/5.jpeg"
-      ]
-    },
-    "5": {
-      "title": "VEX Robotics High Stakes Early Season Reveal",
-      "year": "2024",
-      "type": "Promotional",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=ZU6qM1QNLcs",
-      "thumbnail": "work/5/thumbnail.png",
-      "stills": [
-        "work/5/stills/1.png",
-        "work/5/stills/2.png",
-        "work/5/stills/3.png",
-        "work/5/stills/4.png",
-        "work/5/stills/5.png",
-        "work/5/stills/6.png",
-        "work/5/stills/7.png",
-        "work/5/stills/8.png",
-        "work/5/stills/9.png",
-        "work/5/stills/10.png",
-        "work/5/stills/11.png",
-        "work/5/stills/12.png"
-      ],
-      "bts": [
-        "work/5/bts/1.jpeg",
-        "work/5/bts/2.jpeg",
-        "work/5/bts/3.jpeg",
-        "work/5/bts/4.jpeg",
-        "work/5/bts/5.jpeg",
-        "work/5/bts/6.jpeg",
-        "work/5/bts/7.jpeg",
-        "work/5/bts/8.jpeg",
-        "work/5/bts/9.jpeg",
-        "work/5/bts/10.jpeg",
-        "work/5/bts/11.jpeg",
-        "work/5/bts/12.jpeg",
-        "work/5/bts/13.jpeg"
-      ]
-    },
-    "6": {
-      "title": "Digital Postcards",
-      "year": "2024-2025",
-      "type": "Experimental",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "",
-      "thumbnail": "work/6/thumbnail.png",
-      "stills": [
-        "work/6/stills/1.png",
-        "work/6/stills/2.png",
-        "work/6/stills/3.png",
-        "work/6/stills/4.png",
-        "work/6/stills/5.png",
-        "work/6/stills/6.png",
-        "work/6/stills/7.png",
-        "work/6/stills/8.png",
-        "work/6/stills/9.png",
-        "work/6/stills/10.png",
-        "work/6/stills/11.png",
-        "work/6/stills/12.png",
-        "work/6/stills/13.png",
-        "work/6/stills/14.png",
-        "work/6/stills/15.png",
-        "work/6/stills/16.png"
-      ],
-      "bts": []
-    },
-    "7": {
-      "title": "Silence is my Voice",
-      "year": "2024",
-      "type": "Drama Short Film",
-      "role": "Cinematographer",
-      "info": "",
-      "link": "",
-      "thumbnail": "work/7/thumbnail.png",
-      "stills": [
-        "work/7/stills/1.png",
-        "work/7/stills/2.png",
-        "work/7/stills/3.png",
-        "work/7/stills/4.png",
-        "work/7/stills/5.png",
-        "work/7/stills/6.png",
-        "work/7/stills/7.png",
-        "work/7/stills/8.png",
-        "work/7/stills/9.png",
-        "work/7/stills/10.png",
-        "work/7/stills/11.jpg"
-      ],
-      "bts": []
-    },
-    "8": {
-      "title": "Waiting Room",
-      "year": "2024",
-      "type": "Drama Short Film",
-      "role": "Cinematographer",
-      "info": "Orange County School of the Arts - Best Picture 2024",
-      "link": "",
-      "thumbnail": "work/8/thumbnail.png",
-      "stills": [
-        "work/8/stills/1.png",
-        "work/8/stills/2.png",
-        "work/8/stills/3.png",
-        "work/8/stills/4.png",
-        "work/8/stills/5.png",
-        "work/8/stills/6.png",
-        "work/8/stills/7.png",
-        "work/8/stills/8.png",
-        "work/8/stills/9.png",
-        "work/8/stills/10.png",
-        "work/8/stills/11.png"
-      ],
-      "bts": [
-        "work/8/bts/1.jpeg",
-        "work/8/bts/2.jpeg",
-        "work/8/bts/3.jpg",
-        "work/8/bts/4.jpeg",
-        "work/8/bts/5.jpeg",
-        "work/8/bts/6.jpeg",
-        "work/8/bts/7.jpeg",
-        "work/8/bts/8.jpeg",
-        "work/8/bts/9.jpeg",
-        "work/8/bts/10.jpeg",
-        "work/8/bts/11.jpeg",
-        "work/8/bts/12.jpeg"
-      ]
-    },
-    "9": {
-      "title": "My Roommate is a Filmmaker",
-      "year": "2023",
-      "type": "Comedy Short Film",
-      "role": "Writer, Director",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=aZaXEEB_rls",
-      "thumbnail": "work/9/thumbnail.png",
-      "stills": [
-        "work/9/stills/1.png",
-        "work/9/stills/2.png",
-        "work/9/stills/3.png",
-        "work/9/stills/4.png",
-        "work/9/stills/5.png",
-        "work/9/stills/6.png",
-        "work/9/stills/7.png",
-        "work/9/stills/8.png"
-      ],
-      "bts": [
-        "work/9/bts/1.jpeg",
-        "work/9/bts/2.jpeg",
-        "work/9/bts/3.jpeg",
-        "work/9/bts/4.jpeg",
-        "work/9/bts/5.jpeg",
-        "work/9/bts/6.jpeg",
-        "work/9/bts/7.jpeg",
-        "work/9/bts/8.jpeg",
-        "work/9/bts/9.jpeg",
-        "work/9/bts/10.jpeg",
-        "work/9/bts/11.jpeg",
-        "work/9/bts/12.jpeg"
-      ]
-    },
-    "10": {
-      "title": "VEX Robotics High Stakes February Reveal",
-      "year": "2025",
-      "type": "Promotional",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=_P9p1S8SMig&pp=ygUFMjkyMmM%3D",
-      "thumbnail": "work/10/thumbnail.png",
-      "stills": [
-        "work/10/stills/1.png",
-        "work/10/stills/2.png",
-        "work/10/stills/3.png",
-        "work/10/stills/4.png",
-        "work/10/stills/5.png",
-        "work/10/stills/6.png"
-      ],
-      "bts": [
-        "work/10/bts/1.jpeg",
-        "work/10/bts/2.jpeg",
-        "work/10/bts/3.jpeg",
-        "work/10/bts/4.jpeg",
-        "work/10/bts/5.jpeg",
-        "work/10/bts/6.jpeg",
-        "work/10/bts/7.jpeg",
-        "work/10/bts/8.jpeg",
-        "work/10/bts/9.jpeg"
-      ]
-    },
-    "11": {
-      "title": "VEX Robotics High Stakes Regional Reveal",
-      "year": "2025",
-      "type": "Promotional",
-      "role": "Director, Cinematographer",
-      "info": "",
-      "link": "https://www.youtube.com/watch?v=FYPiEvNyMY4&pp=ygUFMjkyMmM%3D",
-      "thumbnail": "work/11/thumbnail.jpg",
-      "stills": [
-        "work/11/stills/1.png",
-        "work/11/stills/2.jpg",
-        "work/11/stills/3.png",
-        "work/11/stills/4.png",
-        "work/11/stills/5.png",
-        "work/11/stills/6.png",
-        "work/11/stills/7.png",
-        "work/11/stills/8.png",
-        "work/11/stills/9.png",
-        "work/11/stills/10.png",
-        "work/11/stills/11.png",
-        "work/11/stills/12.png",
-        "work/11/stills/13.png"
-      ],
-      "bts": []
-    },
-    "12": {
-      "title": "Open",
-      "year": "2025",
-      "type": "Drama Short Film",
-      "role": "Cinematographer, Editor",
-      "info": "",
-      "link": "",
-      "thumbnail": "work/12/thumbnail.jpg",
-      "stills": [
-        "work/12/stills/1.jpg",
-        "work/12/stills/2.jpg",
-        "work/12/stills/3.jpg",
-        "work/12/stills/4.jpg",
-        "work/12/stills/5.jpg",
-        "work/12/stills/6.jpg",
-        "work/12/stills/7.jpg",
-        "work/12/stills/8.png",
-        "work/12/stills/9.jpg",
-        "work/12/stills/10.jpg",
-        "work/12/stills/11.png",
-        "work/12/stills/12.jpg"
-      ],
-      "bts": [
-        "work/12/bts/1.jpeg",
-        "work/12/bts/2.jpeg",
-        "work/12/bts/3.jpeg",
-        "work/12/bts/4.jpeg",
-        "work/12/bts/5.jpeg",
-        "work/12/bts/6.jpeg",
-        "work/12/bts/7.jpeg"
-      ]
-    },
-    "13": {
-      "title": "48hr Film Fest Promo",
-      "year": "2025",
-      "type": "Promotional",
-      "role": "Director, Cinematographer",
-      "info": "Main promotional video for Orange County 48 hour film festival",
-      "link": "https://www.instagram.com/reel/DJAdSz0TH1z/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-      "thumbnail": "work/13/thumbnail.png",
-      "stills": [
-        "work/13/stills/1.png",
-        "work/13/stills/2.png",
-        "work/13/stills/3.png",
-        "work/13/stills/4.png",
-        "work/13/stills/5.png",
-        "work/13/stills/6.png",
-        "work/13/stills/7.png",
-        "work/13/stills/8.png",
-        "work/13/stills/9.png",
-        "work/13/stills/10.png"
-      ],
-      "bts": []
-    },
-    "14": {
-      "title": "Orange County 48hr",
-      "year": "2025",
-      "type": "Film Festival",
-      "role": "Producer, Director",
-      "info": "Orange County 48 Hour Film Festival students create a film from start to finish in 48 hrs with a common theme. We had 18 total submission with 80 participants among 11 different Orange County high schools.",
-      "link": "https://www.instagram.com/oc.48hr.filmfest/",
-      "thumbnail": "work/14/thumbnail.jpg",
-      "stills": [],
-      "bts": [
-        "work/14/bts/1.jpg",
-        "work/14/bts/2.jpg",
-        "work/14/bts/3.jpg",
-        "work/14/bts/4.jpg",
-        "work/14/bts/5.jpg",
-        "work/14/bts/6.jpg",
-        "work/14/bts/7.jpg",
-        "work/14/bts/8.jpg",
-        "work/14/bts/9.jpg",
-        "work/14/bts/10.jpg",
-        "work/14/bts/11.jpg",
-        "work/14/bts/12.jpg",
-        "work/14/bts/13.jpg",
-        "work/14/bts/14.jpg",
-        "work/14/bts/15.jpg",
-        "work/14/bts/16.jpg",
-        "work/14/bts/17.jpg"
-      ]
-    },
-    "15": {
-      "title": "before we leave",
-      "year": "2025",
-      "type": "Experimental",
-      "role": "Cinematographer, Editor",
-      "info": "",
-      "link": "https://www.instagram.com/p/DPaMci4DHZ5/",
-      "thumbnail": "work/15/thumbnail.png",
-      "stills": [
-        "work/15/stills/1.png",
-        "work/15/stills/2.png",
-        "work/15/stills/3.png",
-        "work/15/stills/4.png",
-        "work/15/stills/5.png",
-        "work/15/stills/6.png",
-        "work/15/stills/7.png",
-        "work/15/stills/8.png",
-        "work/15/stills/9.png"
-      ],
-      "bts": []
-    },
-    "16": {
-      "title": "Power Play",
-      "year": "2025",
-      "type": "Drama Short Film",
-      "role": "Co-Director, Cinematographer",
-      "info": "Orange County School of the Arts - 2025 Best Cinemtography, Best Sound Design, Best Editing",
-      "link": "https://www.instagram.com/power.play.hockey.film/",
-      "thumbnail": "work/16/thumbnail.jpg",
-      "stills": [
-        "work/16/stills/1.jpg",
-        "work/16/stills/2.jpg",
-        "work/16/stills/3.jpg",
-        "work/16/stills/4.jpg",
-        "work/16/stills/5.jpg",
-        "work/16/stills/6.jpg",
-        "work/16/stills/7.jpg",
-        "work/16/stills/8.jpg",
-        "work/16/stills/9.jpg",
-        "work/16/stills/10.jpg",
-        "work/16/stills/11.jpg",
-        "work/16/stills/12.jpg",
-        "work/16/stills/13.jpg",
-        "work/16/stills/14.jpg",
-        "work/16/stills/15.jpg",
-        "work/16/stills/16.jpg",
-        "work/16/stills/17.jpg",
-        "work/16/stills/18.jpg",
-        "work/16/stills/19.jpg"
-      ],
-      "bts": [
-        "work/16/bts/1.jpg",
-        "work/16/bts/2.jpg",
-        "work/16/bts/3.jpg",
-        "work/16/bts/4.jpg",
-        "work/16/bts/5.jpg",
-        "work/16/bts/6.jpg",
-        "work/16/bts/7.jpg",
-        "work/16/bts/8.jpg",
-        "work/16/bts/9.jpg",
-        "work/16/bts/10.jpg",
-        "work/16/bts/11.jpg",
-        "work/16/bts/12.jpg",
-        "work/16/bts/13.jpg",
-        "work/16/bts/14.jpg",
-        "work/16/bts/15.jpg",
-        "work/16/bts/16.jpg",
-        "work/16/bts/17.jpg",
-        "work/16/bts/18.jpg",
-        "work/16/bts/19.jpg",
-        "work/16/bts/20.jpg",
-        "work/16/bts/21.jpg",
-        "work/16/bts/22.jpg",
-        "work/16/bts/23.jpg",
-        "work/16/bts/24.jpg",
-        "work/16/bts/25.jpg",
-        "work/16/bts/26.jpg",
-        "work/16/bts/27.jpg",
-        "work/16/bts/28.jpg",
-        "work/16/bts/29.jpg",
-        "work/16/bts/30.jpg",
-        "work/16/bts/31.jpg",
-        "work/16/bts/32.jpg",
-        "work/16/bts/33.jpg",
-        "work/16/bts/34.jpg",
-        "work/16/bts/35.jpg",
-        "work/16/bts/36.jpg",
-        "work/16/bts/37.jpg",
-        "work/16/bts/38.jpg",
-        "work/16/bts/39.jpg",
-        "work/16/bts/40.jpg",
-        "work/16/bts/41.jpg",
-        "work/16/bts/42.jpg",
-        "work/16/bts/43.jpg",
-        "work/16/bts/44.jpg",
-        "work/16/bts/45.jpg",
-        "work/16/bts/46.jpg"
-      ]
-    }
-  },
-  "photography": [
-    "photography/1.jpg",
-    "photography/2.jpg",
-    "photography/3.jpg",
-    "photography/4.jpg",
-    "photography/5.jpg",
-    "photography/6.jpg",
-    "photography/7.jpg",
-    "photography/8.jpg",
-    "photography/9.jpg",
-    "photography/10.jpg",
-    "photography/11.jpg",
-    "photography/12.jpg",
-    "photography/13.png",
-    "photography/14.png",
-    "photography/15.png",
-    "photography/16.jpg",
-    "photography/17.jpg",
-    "photography/18.jpg",
-    "photography/19.jpg",
-    "photography/20.jpg",
-    "photography/21.jpg"
-  ],
-  "graphic":[
-    "graphic-design/1.png",
-    "graphic-design/2.png",
-    "graphic-design/3.png",
-    "graphic-design/4.jpg",
-    "graphic-design/5.png",
-    "graphic-design/6.png",
-    "graphic-design/7.png",
-    "graphic-design/8.png",
-    "graphic-design/9.png",
-    "graphic-design/10.png",
-    "graphic-design/11.png",
-    "graphic-design/12.png",
-  ],
-  "crew": [
-    "crew/1.jpeg",
-    "crew/2.jpeg",
-    "crew/3.jpeg",
-    "crew/4.jpeg",
-    "crew/5.jpeg",
-    "crew/6.jpeg",
-    "crew/7.jpeg",
-    "crew/8.jpeg",
-    "crew/9.jpeg",
-    "crew/10.jpeg",
-    "crew/11.jpeg",
-    "crew/12.jpeg",
-    "crew/13.jpeg",
-    "crew/14.jpeg",
-    "crew/15.jpeg",
-    "crew/16.jpeg",
-    "crew/17.jpeg",
-    "crew/18.jpeg",
-    "crew/19.jpeg",
-    "crew/20.jpeg",
-    "crew/21.jpg",
-    "crew/22.jpeg",
-    "crew/23.jpeg",
-    "crew/24.jpeg",
-    "crew/25.jpeg",
-    "crew/26.jpeg"
-  ]
-};
-
-        function toggleMenu() {
-            const navItems = document.getElementById('navItems');
-            navItems.classList.toggle('show');
-        }
-
-        function showPage(pageId) {
-            // Close mobile menu
-            document.getElementById('navItems').classList.remove('show');
-            
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            document.getElementById(pageId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // Progressive image loading
-        function createLowResImage(src) {
-            // Create a low-res version path by adding a suffix or using a smaller size
-            // For now, we'll use a simple approach with a placeholder
-            return src; // In production, you'd serve actual low-res versions
-        }
-
-        function loadImageProgressively(img, src) {
-            img.classList.add('fade-in');
-            
-            // Load low-res first (placeholder for now)
-            img.src = src;
-            
-            // Create high-res image
-            const highResImg = new Image();
-            highResImg.onload = function() {
-                img.src = highResImg.src;
-                img.classList.add('loaded');
-            };
-            highResImg.src = src;
-        }
-
-        function preloadCriticalImages() {
-            const criticalImages = [];
-            
-            // Add work thumbnails to critical images
-            Object.values(portfolioConfig.work).forEach(work => {
-                if (work.thumbnail) {
-                    criticalImages.push(work.thumbnail);
+        // Static configuration
+        const staticPortfolioConfig = {
+            profileImage: 'profile.jpg',
+            work: {
+                1: {
+                    title: 'Sample Project 1',
+                    year: '2024',
+                    type: 'Short Film',
+                    role: 'Director',
+                    info: 'Sample project description.',
+                    link: '',
+                    thumbnail: 'work/1/thumbnail.jpg',
+                    stills: ['work/1/stills/1.jpg'],
+                    bts: ['work/1/bts/1.jpg']
                 }
-            });
-            
-            // Add profile image
-            if (portfolioConfig.profileImage) {
-                criticalImages.push(portfolioConfig.profileImage);
+            },
+            photography: ['photography/1.jpg'],
+            graphicDesign: ['graphic-design/1.jpg'],
+            crew: ['crew/1.jpg']
+        };
+
+        // Auto-discovery functions
+        async function checkFileExists(path) {
+            try {
+                const response = await fetch(path, { method: 'HEAD' });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
+
+        async function tryReadTextFile(path) {
+            try {
+                const response = await fetch(path);
+                if (response.ok) return await response.text();
+            } catch {}
+            return null;
+        }
+
+        async function findProfileImage() {
+            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            for (const ext of extensions) {
+                if (await checkFileExists(`profile.${ext}`)) return `profile.${ext}`;
+            }
+            return null;
+        }
+
+        async function discoverWorkProjects() {
+            const work = {};
+            for (let i = 1; i <= 50; i++) {
+                const infoContent = await tryReadTextFile(`work/${i}/info.txt`);
+                if (infoContent) {
+                    const lines = infoContent.trim().split('\n');
+                    const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                    
+                    let thumbnail = null;
+                    for (const ext of extensions) {
+                        if (await checkFileExists(`work/${i}/thumbnail.${ext}`)) {
+                            thumbnail = `work/${i}/thumbnail.${ext}`;
+                            break;
+                        }
+                    }
+                    
+                    const stills = [];
+                    for (let j = 1; j <= 50; j++) {
+                        let found = false;
+                        for (const ext of extensions) {
+                            if (await checkFileExists(`work/${i}/stills/${j}.${ext}`)) {
+                                stills.push(`work/${i}/stills/${j}.${ext}`);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) break;
+                    }
+                    
+                    const bts = [];
+                    for (let j = 1; j <= 50; j++) {
+                        let found = false;
+                        for (const ext of extensions) {
+                            if (await checkFileExists(`work/${i}/bts/${j}.${ext}`)) {
+                                bts.push(`work/${i}/bts/${j}.${ext}`);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) break;
+                    }
+                    
+                    work[i] = {
+                        title: lines[0] || '',
+                        year: lines[1] || '',
+                        type: lines[2] || '',
+                        role: lines[3] || '',
+                        info: lines[4] || '',
+                        link: lines[5] || '',
+                        thumbnail,
+                        stills,
+                        bts
+                    };
+                    
+                    if (AUTO_DISCOVERY_MODE) {
+                        document.getElementById('debugInfo').innerHTML = `Found ${Object.keys(work).length} projects...`;
+                    }
+                }
+            }
+            return work;
+        }
+
+        async function discoverPhotos(directory, limit = 50) {
+            const photos = [];
+            const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            for (let i = 1; i <= limit; i++) {
+                let found = false;
+                for (const ext of extensions) {
+                    if (await checkFileExists(`${directory}/${i}.${ext}`)) {
+                        photos.push(`${directory}/${i}.${ext}`);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) break;
+            }
+            return photos;
+        }
+
+        async function autoDiscover() {
+            if (AUTO_DISCOVERY_MODE) {
+                document.getElementById('debugInfo').innerHTML = 'Discovering files...';
             }
             
-            // Preload critical images
-            criticalImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
+            const config = {
+                profileImage: await findProfileImage(),
+                work: await discoverWorkProjects(),
+                photography: await discoverPhotos('photography'),
+                graphicDesign: await discoverPhotos('graphic-design'),
+                crew: await discoverPhotos('crew')
+            };
+            
+            discoveredConfig = config;
+            
+            if (AUTO_DISCOVERY_MODE) {
+                document.getElementById('debugInfo').innerHTML = `
+                    Profile: ${config.profileImage ? '✓' : '✗'}<br>
+                    Work: ${Object.keys(config.work).length} projects<br>
+                    Photography: ${config.photography.length} photos<br>
+                    Graphic Design: ${config.graphicDesign.length} photos<br>
+                    Crew: ${config.crew.length} photos
+                `;
+            }
+            
+            return config;
+        }
+
+        function generateConfig() {
+            if (!discoveredConfig) return;
+            console.log('const portfolioConfig = ' + JSON.stringify(discoveredConfig, null, 2) + ';');
+            alert('Configuration generated! Check browser console (F12).');
+        }
+
+        function downloadConfig() {
+            if (!discoveredConfig) return;
+            const blob = new Blob(['const portfolioConfig = ' + JSON.stringify(discoveredConfig, null, 2) + ';'], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio-config.js';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Navigation
+        function toggleMenu() {
+            document.getElementById('navItems').classList.toggle('show');
+        }
+
+        function getPage() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('page') || 'home';
+        }
+
+        function getProjectId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('project');
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            const pageElement = document.getElementById(page + 'Page');
+            if (pageElement) pageElement.classList.add('active');
+            
+            document.querySelectorAll(`.nav-item[href="?page=${page}"]`).forEach(item => {
+                item.classList.add('active');
             });
+            
+            document.getElementById('navItems').classList.remove('show');
+        }
+
+        function navigateToProject(projectId) {
+            window.location.href = `?page=project&project=${projectId}`;
+        }
+
+        // Image functions
+        function loadImageProgressively(img, src) {
+            img.classList.add('fade-in');
+            img.src = src;
+            img.onload = () => img.classList.add('loaded');
         }
 
         function getIconForLink(url) {
             if (!url) return '';
-            
-            const lowerUrl = url.toLowerCase();
-            
-            if (lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be')) {
-                return `<svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>`;
-            } else if (lowerUrl.includes('instagram.com')) {
-                return `<svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>`;
-            } else {
-                return `<svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
-                </svg>`;
+            const lower = url.toLowerCase();
+            if (lower.includes('youtube')) {
+                return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>';
+            } else if (lower.includes('instagram')) {
+                return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
             }
+            return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>';
         }
 
-        function showWorkDetail(workId) {
-            const work = portfolioConfig.work[workId];
-            if (!work) return;
-
-            const content = document.getElementById('workDetailContent');
-            const allImages = [...work.stills, ...work.bts];
-            
-            // Create link button if link exists
-            let linkButton = '';
-            if (work.link && work.link.trim()) {
-                const icon = getIconForLink(work.link);
-                const linkText = work.link.toLowerCase().includes('youtube') ? 'Watch' : 
-                                work.link.toLowerCase().includes('instagram') ? 'View' : 'Visit';
-                linkButton = `<a href="${work.link}" target="_blank" class="project-link-btn">
-                    ${icon}
-                    ${linkText}
-                </a>`;
-            }
-            
-            content.innerHTML = `
-                <h1>${work.title} (${work.year})</h1>
-                <h2>${work.type}</h2>
-                <h2>${work.role}</h2>
-                ${linkButton}
-                <p>${work.info}</p>
-                
-                <div class="work-grid">
-                    ${work.stills.map((img, index) => `
-                        <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${index})">
-                            <img src="${img}" alt="Still ${index + 1}" onerror="this.style.display='none'" loading="lazy">
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="photo-collage">
-                    ${work.bts.map((img, index) => `
-                        <div class="photo-item" onclick="openModal(${JSON.stringify(allImages).replace(/"/g, '&quot;')}, ${work.stills.length + index})">
-                            <img src="${img}" alt="BTS ${index + 1}" onerror="this.style.display='none'" loading="lazy">
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            showPage('workDetail');
-        }
-
+        // Modal functions
         function openModal(images, startIndex = 0) {
             currentImages = images;
             currentImageIndex = startIndex;
@@ -1363,14 +859,10 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
             document.getElementById('modalImage').src = currentImages[currentImageIndex];
         }
 
-        // Close modal on click outside image
         document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
 
-        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (document.getElementById('imageModal').classList.contains('active')) {
                 if (e.key === 'Escape') closeModal();
@@ -1379,26 +871,23 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
             }
         });
 
-        // Initialize the website
-        function init() {
-            // Load profile image
+        // Page initialization functions
+        function initHome() {
+            if (!portfolioConfig) return;
+            
             if (portfolioConfig.profileImage) {
-                document.getElementById('profileImage').src = portfolioConfig.profileImage;
-                document.getElementById('profileImage').onerror = function() {
-                    this.style.display = 'none';
-                    console.warn('Could not load profile image:', portfolioConfig.profileImage);
-                };
+                const profileImg = document.getElementById('profileImage');
+                loadImageProgressively(profileImg, portfolioConfig.profileImage);
             }
 
-            // Populate home page work grid (reverse order)
             const workGrid = document.getElementById('workGrid');
             const workIds = Object.keys(portfolioConfig.work).reverse();
             
             workGrid.innerHTML = workIds.map(id => {
                 const work = portfolioConfig.work[id];
                 return `
-                    <div class="work-item" onclick="showWorkDetail(${id})">
-                        <img src="${work.thumbnail}" alt="${work.title}" onerror="this.style.display='none'" loading="eager">
+                    <div class="work-item" onclick="navigateToProject(${id})">
+                        <img src="" alt="${work.title}" class="fade-in" data-src="${work.thumbnail}" onerror="this.style.display='none'">
                         <div class="work-overlay">
                             <div class="work-title">${work.title} (${work.year})</div>
                             <div class="work-type">${work.type}</div>
@@ -1408,29 +897,129 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
                 `;
             }).join('');
 
-            // Populate photography page
+            workGrid.querySelectorAll('img').forEach(img => {
+                const src = img.dataset.src;
+                if (src) loadImageProgressively(img, src);
+            });
+        }
+
+        function initPhotography() {
+            if (!portfolioConfig) return;
             const photoCollage = document.getElementById('photoCollage');
             photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.photography).replace(/"/g, '&quot;')}, ${index})">
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.photography)}, ${index})'>
                     <img src="${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
-                
-            // Populate graphic design page
+        }
+
+        function initGraphic() {
+            if (!portfolioConfig) return;
             const graphicCollage = document.getElementById('graphicCollage');
-            graphicCollage.innerHTML = portfolioConfig.graphic.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.graphic).replace(/"/g, '&quot;')}, ${index})">
+            graphicCollage.innerHTML = portfolioConfig.graphicDesign.map((img, index) => `
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.graphicDesign)}, ${index})'>
                     <img src="${img}" alt="Graphic Design ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
+        }
 
-            // Populate crew work page
+        function initCrew() {
+            if (!portfolioConfig) return;
             const crewCollage = document.getElementById('crewCollage');
             crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
-                <div class="photo-item" onclick="openModal(${JSON.stringify(portfolioConfig.crew).replace(/"/g, '&quot;')}, ${index})">
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.crew)}, ${index})'>
                     <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
+        }
+
+        function initProject() {
+            const projectId = getProjectId();
+            if (!projectId || !portfolioConfig) return;
+
+            const work = portfolioConfig.work[projectId];
+            if (!work) {
+                window.location.href = '?page=home';
+                return;
+            }
+
+            const content = document.getElementById('workDetailContent');
+            const allImages = [...work.stills, ...work.bts];
+            
+            let linkButton = '';
+            if (work.link && work.link.trim()) {
+                const icon = getIconForLink(work.link);
+                const linkText = work.link.toLowerCase().includes('youtube') ? 'Watch' : 
+                                work.link.toLowerCase().includes('instagram') ? 'View' : 'Visit';
+                linkButton = `<a href="${work.link}" target="_blank" class="project-link-btn">
+                    ${icon}
+                    ${linkText}
+                </a>`;
+            }
+            
+            content.innerHTML = `
+                <h1>${work.title} (${work.year})</h1>
+                <h2>${work.type}</h2>
+                <h2>${work.role}</h2>
+                ${linkButton}
+                <p>${work.info}</p>
+                
+                <div class="work-grid">
+                    ${work.stills.map((img, index) => `
+                        <div class="photo-item" onclick='openModal(${JSON.stringify(allImages)}, ${index})'>
+                            <img src="${img}" alt="Still ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="photo-collage">
+                    ${work.bts.map((img, index) => `
+                        <div class="photo-item" onclick='openModal(${JSON.stringify(allImages)}, ${work.stills.length + index})'>
+                            <img src="${img}" alt="BTS ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Main initialization
+        async function init() {
+            // Determine config
+            if (typeof AUTO_DISCOVERY_MODE !== 'undefined' && AUTO_DISCOVERY_MODE) {
+                document.getElementById('debugPanel').style.display = 'block';
+                portfolioConfig = await autoDiscover();
+            } else {
+                portfolioConfig = staticPortfolioConfig;
+            }
+            
+            // Route to appropriate page
+            const page = getPage();
+            const projectId = getProjectId();
+            
+            if (projectId) {
+                showPage('project');
+                initProject();
+            } else {
+                showPage(page);
+                
+                switch(page) {
+                    case 'home':
+                        initHome();
+                        break;
+                    case 'photography':
+                        initPhotography();
+                        break;
+                    case 'graphic':
+                        initGraphic();
+                        break;
+                    case 'crew':
+                        initCrew();
+                        break;
+                    default:
+                        showPage('home');
+                        initHome();
+                }
+            }
         }
 
         // Start the application
