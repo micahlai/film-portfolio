@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Micah Lai - Film Portfolio</title>
+    <title>Micah Lai</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         * {
@@ -44,7 +44,8 @@
             margin-right: 50px;
             font-size: 24px;
             font-weight: 300;
-            letter-spacing: 2px;
+            font-family: 'bodoni',serif;
+            letter-spacing: 1px;
             color: #333;
         }
 
@@ -191,6 +192,12 @@
                 columns: 1;
             }
         }
+        @font-face {
+        font-family: 'bodoni'; 
+        src: url('bodoni.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal; 
+        }
 
         .main-content {
             margin-top: 80px;
@@ -204,7 +211,7 @@
         .page {
             display: none;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
         }
 
         .page.active {
@@ -538,12 +545,12 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-left">
-            <h1>Micah Lai</h1>
+            <h1><b>Micah Lai</b></h1>
             <div class="nav-items" id="navItems">
-                <button class="nav-item active" onclick="showPage('home')">Home</button>
-                <button class="nav-item" onclick="showPage('photography')">Photography</button>
-                <button class="nav-item" onclick="showPage('graphic')">Graphic Design</button>
-                <button class="nav-item" onclick="showPage('crew')">Crew Work</button>
+                <button class="nav-item active" onclick="showPage('home')">home</button>
+                <button class="nav-item" onclick="showPage('photography')">photography</button>
+                <button class="nav-item" onclick="showPage('graphic')">graphic design</button>
+                <button class="nav-item" onclick="showPage('crew')">crew</button>
             </div>
         </div>
         <div class="sidebar-right">
