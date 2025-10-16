@@ -36,7 +36,7 @@
     </div>
 
     <div class="main-content">
-        <a href="index.html" class="back-button">← Back to Home</a>
+        <a href="../" class="back-button">← Back to Home</a>
         <div class="work-detail" id="workDetailContent"></div>
     </div>
 
@@ -60,7 +60,7 @@
         function initProject() {
             const projectId = getProjectId();
             if (!projectId || !portfolioConfig.work[projectId]) {
-                window.location.href = 'index.html';
+                window.location.href = 'project.html';
                 return;
             }
 
