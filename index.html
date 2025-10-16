@@ -83,7 +83,7 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
             workGrid.innerHTML = workIds.map(id => {
                 const work = portfolioConfig.work[id];
                 return `
-                    <a href="/project.html?id=${id}" class="work-item">
+                    <a href="project.html?id=${id}/" class="work-item">
                         <img src="" alt="${work.title}" class="fade-in" data-src="${work.thumbnail}" onerror="this.style.display='none'">
                         <div class="work-overlay">
                             <div class="work-title">${work.title} (${work.year})</div>
