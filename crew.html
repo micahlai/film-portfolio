@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Micah Lai</title>
+    <title>Micah Lai - Crew Work</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJKLYY76LC"></script>
@@ -19,10 +19,10 @@
         <div class="sidebar-left">
             <h1><b>Micah Lai</b></h1>
             <div class="nav-items" id="navItems">
-                <a href="index.html" class="nav-item active">home</a>
-                <a href="photography.html" class="nav-item">photography</a>
-                <a href="graphic-design.html" class="nav-item">graphic</a>
-                <a href="crew.html" class="nav-item">crew</a>
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="photography.html" class="nav-item">Photography</a>
+                <a href="graphic-design.html" class="nav-item">Graphic Design</a>
+                <a href="crew.html" class="nav-item active">Crew Work</a>
             </div>
         </div>
         <div class="sidebar-right">
@@ -36,21 +36,7 @@
     </div>
 
     <div class="main-content">
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/kASTIVtnwjY" allowfullscreen></iframe>
-        </div>
-        <div class="work-grid" id="workGrid"></div>
-        
-        <div class="bio-section">
-            <div class="bio-content">
-                <div class="bio-photo">
-                    <img id="profileImage" src="" alt="Profile Photo">
-                </div>
-                <div class="bio-text">
-Hey! My name is Micah Lai. I'm a current student at Cornell University studying Electrical & Computer Engineering in the college of engineering. Film production is one of my biggest passions. I graduated from Orange County School of the Arts in the Film & Television program. I mainly work as a cinematographer and 1st assistant camera for narratives but also do some industrial/freelance work on the side.
-                </div>
-            </div>
-        </div>
+        <div class="photo-collage" id="crewCollage"></div>
     </div>
 
     <div id="imageModal" class="modal">
@@ -65,42 +51,16 @@ Hey! My name is Micah Lai. I'm a current student at Cornell University studying 
     <script src="config.js"></script>
     <script src="portfolio.js"></script>
     <script>
-        function loadImageProgressively(img, src) {
-            img.classList.add('fade-in');
-            img.src = src;
-            img.onload = () => img.classList.add('loaded');
+        function initCrew() {
+            const crewCollage = document.getElementById('crewCollage');
+            graphicCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.crew)}, ${index})'>
+                    <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                </div>
+            `).join('');
         }
 
-        function initHome() {
-            if (portfolioConfig.profileImage) {
-                const profileImg = document.getElementById('profileImage');
-                loadImageProgressively(profileImg, portfolioConfig.profileImage);
-            }
-
-            const workGrid = document.getElementById('workGrid');
-            const workIds = Object.keys(portfolioConfig.work).reverse();
-            
-            workGrid.innerHTML = workIds.map(id => {
-                const work = portfolioConfig.work[id];
-                return `
-                    <a href="project.html?id=${id}" class="work-item">
-                        <img src="" alt="${work.title}" class="fade-in" data-src="${work.thumbnail}" onerror="this.style.display='none'">
-                        <div class="work-overlay">
-                            <div class="work-title">${work.title} (${work.year})</div>
-                            <div class="work-type">${work.type}</div>
-                            <div class="work-role">${work.role}</div>
-                        </div>
-                    </a>
-                `;
-            }).join('');
-
-            workGrid.querySelectorAll('img').forEach(img => {
-                const src = img.dataset.src;
-                if (src) loadImageProgressively(img, src);
-            });
-        }
-
-        initHome();
+        initCrew();
     </script>
 </body>
 </html>
