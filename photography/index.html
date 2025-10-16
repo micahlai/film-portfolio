@@ -54,8 +54,8 @@
         function initPhotography() {
             const photoCollage = document.getElementById('photoCollage');
             photoCollage.innerHTML = portfolioConfig.photography.map((img, index) => `
-                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.photography)}, ${index})'>
-                    <img src="./${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.photography)}, ${index}, "photography/")'>
+                    <img src="../${img}" alt="Photography ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
         }

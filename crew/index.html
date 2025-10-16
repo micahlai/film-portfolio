@@ -54,8 +54,8 @@
         function initCrew() {
             const crewCollage = document.getElementById('crewCollage');
             crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
-                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.crew)}, ${index})'>
-                    <img src="./${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.crew)}, ${index}, "crew/")'>
+                    <img src="../${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
         }

@@ -1,14 +1,16 @@
 let currentImages = [];
 let currentImageIndex = 0;
+let currentPage = ""
 
 function toggleMenu() {
     document.getElementById('navItems').classList.toggle('show');
 }
 
-function openModal(images, startIndex = 0) {
+function openModal(images, startIndex = 0, page="") {
     currentImages = images;
     currentImageIndex = startIndex;
-    document.getElementById('modalImage').src = currentImages[currentImageIndex];
+    currentPage=page
+    document.getElementById('modalImage').src = currentImages[currentImageIndex].replace(currentPage,"");
     document.getElementById('imageModal').classList.add('active');
 }
 
@@ -18,12 +20,12 @@ function closeModal() {
 
 function nextImage() {
     currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-    document.getElementById('modalImage').src = currentImages[currentImageIndex];
+    document.getElementById('modalImage').src = currentImages[currentImageIndex].replace(currentPage,"");
 }
 
 function prevImage() {
     currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-    document.getElementById('modalImage').src = currentImages[currentImageIndex];
+    document.getElementById('modalImage').src = currentImages[currentImageIndex].replace(currentPage,"");
 }
 
 function getIconForLink(url) {
