@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Micah Lai - Crew Work</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJKLYY76LC"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -19,10 +19,10 @@
         <div class="sidebar-left">
             <h1><b>Micah Lai</b></h1>
             <div class="nav-items" id="navItems">
-                <a href="index.html" class="nav-item">home</a>
-                <a href="photography.html" class="nav-item">photography</a>
-                <a href="graphic-design.html" class="nav-item">graphic</a>
-                <a href="crew.html" class="nav-item active"><b>crew</b></a>
+                <a href="/" class="nav-item">home</a>
+                <a href="/photography" class="nav-item">photography</a>
+                <a href="/graphic-design" class="nav-item">graphic</a>
+                <a href="/crew" class="nav-item active"><b>crew</b></a>
             </div>
         </div>
         <div class="sidebar-right">
@@ -48,14 +48,14 @@
         </div>
     </div>
 
-    <script src="config.js"></script>
-    <script src="portfolio.js"></script>
+    <script src="/config.js"></script>
+    <script src="/portfolio.js"></script>
     <script>
         function initCrew() {
             const crewCollage = document.getElementById('crewCollage');
             crewCollage.innerHTML = portfolioConfig.crew.map((img, index) => `
                 <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.crew)}, ${index})'>
-                    <img src="${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+                    <img src="/${img}" alt="Crew Work ${index + 1}" onerror="this.style.display='none'" loading="lazy">
                 </div>
             `).join('');
         }
