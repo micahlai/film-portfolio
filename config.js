@@ -50,7 +50,10 @@ const portfolioConfig = {
         "work/2/bts/3.jpeg",
         "work/2/bts/4.jpeg",
         "work/2/bts/5.jpeg",
-        "work/2/bts/6.jpeg"
+        "work/2/bts/6.jpeg",
+        "work/2/bts/7.jpeg",
+        "work/2/bts/8.jpeg",
+        "work/2/bts/9.jpeg"
       ]
     },
     "3": {
