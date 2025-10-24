@@ -421,7 +421,7 @@ const portfolioConfig = {
       "year": "2025",
       "type": "Drama Short Film",
       "role": "Co-Director, Cinematographer",
-      "info": "Orange County School of the Arts - 2025 Best Cinemtography, Best Sound Design, Best Editing",
+      "info": "Orange County School of the Arts - 2025 Best Cinemtography, Best Sound Design, Best Editing<br>All American Film Festival - 2025 Best Cinematography Nominee",
       "link": "https://www.instagram.com/power.play.hockey.film/",
       "thumbnail": "work/16/thumbnail.jpg",
       "stills": [
