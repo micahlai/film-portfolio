@@ -176,6 +176,15 @@ body {
     margin-bottom: 5px;
 }
 
+.work-seemore {
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 1pc;
+    color: #fff;
+}
+
 .photo-collage {
     columns: 3;
     column-gap: 15px;
