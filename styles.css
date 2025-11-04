@@ -180,7 +180,7 @@ body {
     font-size: 16px;
     margin-bottom: 10px;
     position: absolute;
-    bottom: 0;
+    top: 1pc;
     right: 1pc;
     color: #fff;
 }
