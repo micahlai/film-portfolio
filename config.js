@@ -536,6 +536,7 @@ const portfolioConfig = {
     "graphic-design/15.webp",
     "graphic-design/16.webp",
     "graphic-design/17.webp",
+    "graphic-design/18.webp",
   ],
   "crew": [
     "crew/1.webp",
