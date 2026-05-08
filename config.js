@@ -493,6 +493,86 @@ const portfolioConfig = {
         "work/16/bts/45.webp",
         "work/16/bts/46.webp"
       ]
+    },
+    "17": {
+      "title": "Inertia",
+      "year": "2026",
+      "type": "Drama Short Film",
+      "role": "Cinematographer",
+      "info": "",
+      "link": "https://www.instagram.com/inertiashortfilm/",
+      "thumbnail": "work/17/thumbnail.webp",
+      "stills": [
+        "work/17/stills/1.webp",
+        "work/17/stills/2.webp",
+        "work/17/stills/3.webp",
+        "work/17/stills/4.webp",
+        "work/17/stills/5.webp",
+        "work/17/stills/6.webp",
+        "work/17/stills/7.webp",
+        "work/17/stills/8.webp",
+        "work/17/stills/9.webp",
+        "work/17/stills/10.webp",
+        "work/17/stills/11.webp",
+        "work/17/stills/12.webp"
+      ],
+      "bts": [
+        "work/17/bts/1.webp",
+        "work/17/bts/2.webp",
+        "work/17/bts/3.webp",
+        "work/17/bts/4.webp",
+        "work/17/bts/5.webp",
+        "work/17/bts/6.webp",
+        "work/17/bts/7.webp",
+        "work/17/bts/8.webp",
+        "work/17/bts/9.webp",
+        "work/17/bts/10.webp"
+      ]
+    },
+    "18": {
+      "title": "Zebra斑马",
+      "year": "2026",
+      "type": "Drama Short Film",
+      "role": "Cinematographer",
+      "info": "",
+      "link": "https://www.instagram.com/zebraa_film/",
+      "thumbnail": "work/18/thumbnail.webp",
+      "stills": [
+        "work/18/stills/1.webp",
+        "work/18/stills/2.webp",
+        "work/18/stills/3.webp",
+        "work/18/stills/4.webp",
+        "work/18/stills/5.webp",
+        "work/18/stills/6.webp",
+        "work/18/stills/7.webp",
+        "work/18/stills/8.webp",
+        "work/18/stills/9.webp",
+        "work/18/stills/10.webp",
+        "work/18/stills/11.webp",
+        "work/18/stills/12.webp",
+        "work/18/stills/13.webp",
+        "work/18/stills/14.webp"
+      ],
+      "bts": [
+        "work/18/bts/1.webp",
+        "work/18/bts/2.webp",
+        "work/18/bts/3.webp",
+        "work/18/bts/4.webp",
+        "work/18/bts/5.webp",
+        "work/18/bts/6.webp",
+        "work/18/bts/7.webp",
+        "work/18/bts/8.webp",
+        "work/18/bts/9.webp",
+        "work/18/bts/10.webp",
+        "work/18/bts/11.webp",
+        "work/18/bts/12.webp",
+        "work/18/bts/13.webp",
+        "work/18/bts/14.webp",
+        "work/18/bts/15.webp",
+        "work/18/bts/16.webp",
+        "work/18/bts/17.webp",
+        "work/18/bts/18.webp"
+      ]
     }
   },
   "photography": [
@@ -518,16 +598,16 @@ const portfolioConfig = {
     "photography/20.webp",
     "photography/21.webp"
   ],
-  "graphic":[
+  "graphic": [
     "graphic-design/1.webp",
     "graphic-design/2.webp",
     "graphic-design/3.webp",
     "graphic-design/4.webp",
     "graphic-design/5.webp",
-    //"graphic-design/6.webp",
+    // "graphic-design/6.webp",
     "graphic-design/7.webp",
     "graphic-design/8.webp",
-    //"graphic-design/9.webp",
+    // "graphic-design/9.webp",
     "graphic-design/10.webp",
     //"graphic-design/11.webp",
     "graphic-design/12.webp",
@@ -539,7 +619,7 @@ const portfolioConfig = {
     "graphic-design/18.webp",
     "graphic-design/19.webp",
     "graphic-design/20.webp",
-    "graphic-design/21.webp",
+    "graphic-design/21.webp"
   ],
   "crew": [
     "crew/1.webp",
