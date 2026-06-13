@@ -52,13 +52,15 @@
     <script src="../portfolio.js"></script>
     <script>
         function initGraphic() {
-            const graphicCollage = document.getElementById('graphicCollage');
-            graphicCollage.innerHTML = portfolioConfig.graphic.map((img, index) => `
-                <div class="photo-item" onclick='openModal(${JSON.stringify(portfolioConfig.graphic)}, ${index}, "graphic-design/")'>
-                    <img src="../${img}" alt="Graphic Design ${index + 1}" onerror="this.style.display='none'" loading="lazy">
-                </div>
-            `).join('');
-        }
+    const graphicCollage = document.getElementById('graphicCollage');
+    const reversedImages = [...portfolioConfig.graphic].reverse();
+
+    graphicCollage.innerHTML = reversedImages.map((img, index) => `
+        <div class="photo-item" onclick='openModal(${JSON.stringify(reversedImages)}, ${index}, "graphic-design/")'>
+            <img src="../${img}" alt="Graphic Design ${index + 1}" onerror="this.style.display='none'" loading="lazy">
+        </div>
+    `).join('');
+}
 
         initGraphic();
     </script>
